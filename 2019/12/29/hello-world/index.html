@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="我是89hao.这是我的第n个第一篇博客.">
+  <meta name="description" content="我是89hao. 这是我的第n个第一篇博客. 顺便写以下关于pandoc将latex文件转换为markdown文件的总结. 我用的是命令 1pandoc test.tex -o test.md --wrap&#x3D;preserve 如果不加--wrap&#x3D;preserve则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个. 但是无法latex中的\label命">
 <meta property="og:type" content="article">
 <meta property="og:title" content="89hao的博客">
 <meta property="og:url" content="http://yoursite.com/2019/12/29/hello-world/index.html">
 <meta property="og:site_name" content="Rieunity">
-<meta property="og:description" content="我是89hao.这是我的第n个第一篇博客.">
+<meta property="og:description" content="我是89hao. 这是我的第n个第一篇博客. 顺便写以下关于pandoc将latex文件转换为markdown文件的总结. 我用的是命令 1pandoc test.tex -o test.md --wrap&#x3D;preserve 如果不加--wrap&#x3D;preserve则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个. 但是无法latex中的\label命">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-28T16:05:09.843Z">
-<meta property="article:modified_time" content="2019-12-28T16:05:09.843Z">
+<meta property="article:modified_time" content="2019-12-31T12:25:21.926Z">
 <meta property="article:author" content="89hao">
 <meta name="twitter:card" content="summary">
 
@@ -229,6 +229,13 @@
 
               <time title="Created: 2019-12-29 00:05:09" itemprop="dateCreated datePublished" datetime="2019-12-29T00:05:09+08:00">2019-12-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-31 20:25:21" itemprop="dateModified" datetime="2019-12-31T20:25:21+08:00">2019-12-31</time>
+              </span>
 
           
 
@@ -241,7 +248,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>我是89hao.<br>这是我的第n个第一篇博客.</p>
+        <p>我是89hao.<br />
+这是我的第n个第一篇博客.<br />
+顺便写以下关于pandoc将latex文件转换为markdown文件的总结.</p>
+<p>我用的是命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure>
+<p>如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个.</p>
+<p>但是无法latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留.</p>
+<p>除了应用于wordpress的latex2wordpress,还没有找到特别好的转换软件.</p>
 
     </div>
 
@@ -435,6 +449,11 @@
 
 
   
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+
 
   
 

@@ -225,7 +225,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-12-31 16:42:30 / Modified: 16:46:25" itemprop="dateCreated datePublished" datetime="2019-12-31T16:42:30+08:00">2019-12-31</time>
+              <time title="Created: 2019-12-31 16:42:30 / Modified: 17:22:55" itemprop="dateCreated datePublished" datetime="2019-12-31T16:42:30+08:00">2019-12-31</time>
             </span>
 
           
@@ -239,7 +239,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这是关于极大原理的笔记,就是抄写的Evans的书里的内容,这里只限于经典解的情形.</p>
+          <p>这是关于极大原理的笔记,几乎是在抄写的Evans的书里的内容,这里只限于经典解的情形.</p>
 <a class="btn" href="/download/Notes/Daily/19-12-30/19-12-30.pdf" title="Maximum Principle"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
       
     </div>
@@ -407,6 +407,13 @@
 
               <time title="Created: 2019-12-29 00:05:09" itemprop="dateCreated datePublished" datetime="2019-12-29T00:05:09+08:00">2019-12-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-31 20:25:21" itemprop="dateModified" datetime="2019-12-31T20:25:21+08:00">2019-12-31</time>
+              </span>
 
           
 
@@ -419,7 +426,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>我是89hao.<br>这是我的第n个第一篇博客.</p>
+          <p>我是89hao.<br />
+这是我的第n个第一篇博客.<br />
+顺便写以下关于pandoc将latex文件转换为markdown文件的总结.</p>
+<p>我用的是命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure>
+<p>如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个.</p>
+<p>但是无法latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留.</p>
+<p>除了应用于wordpress的latex2wordpress,还没有找到特别好的转换软件.</p>
 
       
     </div>
@@ -604,6 +618,11 @@
 
 
   
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+
 
   
 
