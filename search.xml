@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>maximum-principle</title>
+    <url>/2019/12/31/maximum-principle/</url>
+    <content><![CDATA[<p>这是关于极大原理的笔记,就是抄写的Evans的书里的内容,这里只限于经典解的情形.</p>
+<a class="btn" href="/download/Notes/Daily/19-12-30/19-12-30.pdf" title="Maximum Principle"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+      <tags>
+        <tag>Partial Differential Equations</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Some Basic PDE Questions and Solutions</title>
     <url>/2019/12/29/help-teacher/</url>
     <content><![CDATA[<p>这是老师让我做的几道偏微分方程题目,我基本上是照着陈祖墀偏微分方程第三版的内容写了一遍.</p>
