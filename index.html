@@ -351,7 +351,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-08 22:09:29" itemprop="dateModified" datetime="2020-01-08T22:09:29+08:00">2020-01-08</time>
+                <time title="Modified: 2020-01-10 13:58:21" itemprop="dateModified" datetime="2020-01-10T13:58:21+08:00">2020-01-10</time>
               </span>
 
           
@@ -366,6 +366,10 @@
 
       
           <p>This is my learning note about Maximum Principle, the reference book is Evans’ <em>Partial Differential Equations</em>.</p>
+<p>你好</p>
+<div class="pdf" target="/download/Notes/Daily/PDE/19-12-30/maximum-principle.pdf" height=""></div>
+
+
 <a class="btn" href="/download/Notes/Daily/PDE/19-12-30/maximum-principle.pdf" title="Maximum Principle"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
       
     </div>
@@ -559,7 +563,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>我是89hao.<br>这是我的第n个第一篇博客.<br>顺便写以下关于pandoc将latex文件转换为markdown文件的总结.<br>我用的是命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure></p>
+          <p>我是89hao.<br>这是我的第n个第一篇博客.<br>顺便写以下关于pandoc将latex文件转换为markdown文件的总结.<br>我用的是命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure>
+
 <p>如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个.</p>
 <p>但是latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留.</p>
 <p>除了应用于wordpress的latex2wordpress,还没有找到特别好的转换软件.</p>
@@ -742,6 +748,25 @@
 
 
 
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
 
 
 
