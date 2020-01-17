@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Notes about Nazarov&#39;s paper</title>
+    <url>/2020/01/17/Notes-about-Nazarov-s-paper/</url>
+    <content><![CDATA[<p>This is a learning note about Nazarov’s paper.</p>
+<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+      <tags>
+        <tag>Real Analysis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Some LaTeX Tips</title>
+    <url>/2020/01/16/Some-LaTeX-Tips/</url>
+    <content><![CDATA[<p>这里是平时遇上的latex的相关问题,今后所有的东西一并整理在这里.</p>
+<a id="more"></a>
+<h1 id="如何在目录中为附录加上appendix"><a class="markdownIt-Anchor" href="#如何在目录中为附录加上appendix"></a> 如何在目录中为附录加上Appendix</h1>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line">\usepackage[titletoc]&#123;appendix&#125;</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\begin&#123;appendices&#125;</span><br><span class="line">\section&#123;name of appendix&#125;</span><br><span class="line">...</span><br><span class="line">\end&#123;appendices&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
+<p>如果仅仅想最简单地添加附录,不用上面的宏包,就直接在附录的章节前加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\appendix</span><br><span class="line">\section&#123;name of appendix&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="如何在引用中添加应用的页数"><a class="markdownIt-Anchor" href="#如何在引用中添加应用的页数"></a> 如何在引用中添加应用的页数</h1>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line"></span><br><span class="line">\usepackage&#123;biblatex&#125;</span><br><span class="line">\addbibresource&#123;mybib.bib&#125; </span><br><span class="line">...</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\cite[150]&#123;turan1953neue&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
+<p>这时引用就会显示引用的页数是150,相应的mybib.bib文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@book&#123;turan1953neue,</span><br><span class="line">  title&#x3D;&#123;Eine neue Methode in der Analysis und deren Anwendungen&#125;,</span><br><span class="line">  author&#x3D;&#123;Tur&#123;\&#39;a&#125;n, Paul&#125;,</span><br><span class="line">  year&#x3D;&#123;1953&#125;,</span><br><span class="line">  publisher&#x3D;&#123;Akad&#123;\&#39;e&#125;miai Kiad&#123;\&#39;o&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果想显示第几页到第几页可以写成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\cite[150-151]&#123;turan1953neue&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="添加hyperref宏包后xelatex编译下无法定义新命令c"><a class="markdownIt-Anchor" href="#添加hyperref宏包后xelatex编译下无法定义新命令c"></a> 添加hyperref宏包后xelatex编译下无法定义新命令<code>\C</code></h1>
+<p>直接用<code>\newcommand\C{\ensuremath{\mathbb{C}}}</code>无法定义<code>\C</code>,这是因为该命令已经在宏包hyperref中被定义过.所以如果没有添加hyperref宏包则不会有问题,如果有这个宏包,<br />
+还相继续用<code>\C</code>来表示复数可以用`\renewcommand\C{\ensuremath{\mathbb{C}}}.</p>
+<h1 id="多行注释"><a class="markdownIt-Anchor" href="#多行注释"></a> 多行注释</h1>
+<p>将需要注释的文本放进<code>\iffalse</code>和<code>\fi</code>之间.</p>
+]]></content>
+      <tags>
+        <tag>LaTeX</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>特定格式的文件以相同目录结构复制到另一文件夹下</title>
     <url>/2020/01/11/copy-pdf-file-hold-structure/</url>
     <content><![CDATA[<p>因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:  </p>
