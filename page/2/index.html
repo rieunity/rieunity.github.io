@@ -245,8 +245,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>我是89hao.<br>这是我的第n个第一篇博客(换了好几回).</p>
-<p>顺便写以下关于pandoc将latex文件转换为markdown文件的总结.<br>我用的是命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure><br>如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个.<br>但是latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留.<br>mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不掉的错,大概率是转译问题,而且mathjax又有点慢.<br>除了应用于wordpress的latex2wordpress, pandoc和完全保留原样式的html2pdfEX,还没有找到特别好的转换软件.    </p>
+          <p>我是89hao.<br />
+这是我的第n个第一篇博客(换了好几回).</p>
+<p>顺便写以下关于pandoc将latex文件转换为markdown文件的总结.<br />
+我用的是命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure>
+<p>如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个.<br />
+但是latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留.<br />
+mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不掉的错,大概率是转译问题,而且mathjax又有点慢.<br />
+除了应用于wordpress的latex2wordpress, pandoc和完全保留原样式的html2pdfEX,还没有找到特别好的转换软件.</p>
 
       
     </div>
