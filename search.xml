@@ -12,7 +12,7 @@
   <entry>
     <title>Some LaTeX Tips</title>
     <url>/2020/01/16/Some-LaTeX-Tips/</url>
-    <content><![CDATA[<p>这里是平时遇上的latex的相关问题,今后所有的东西一并整理在这里.</p>
+    <content><![CDATA[<p>这里是平时遇上的latex的相关问题,今后所有的与latex相关的东西都一并整理在这里.</p>
 <a id="more"></a>
 <h1 id="如何在目录中为附录加上appendix"><a class="markdownIt-Anchor" href="#如何在目录中为附录加上appendix"></a> 如何在目录中为附录加上Appendix</h1>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line">\usepackage[titletoc]&#123;appendix&#125;</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\begin&#123;appendices&#125;</span><br><span class="line">\section&#123;name of appendix&#125;</span><br><span class="line">...</span><br><span class="line">\end&#123;appendices&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
