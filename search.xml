@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Notes about Nazarov&#39;s Paper Part II</title>
+    <url>/2020/03/02/Notes-about-Nazarov-s-Paper-Part-II/</url>
+    <content><![CDATA[<p>This is the second learning note about Nazarov’s paper.</p>
+<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partII.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+  </entry>
+  <entry>
     <title>Notes about Nazarov&#39;s paper</title>
     <url>/2020/01/17/Notes-about-Nazarov-s-paper/</url>
     <content><![CDATA[<p>This is a learning note about Nazarov’s paper.</p>
-<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partI.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
       <tags>
         <tag>Real Analysis</tag>
       </tags>
@@ -29,6 +35,8 @@
 还相继续用<code>\C</code>来表示复数可以用`\renewcommand\C{\ensuremath{\mathbb{C}}}.</p>
 <h1 id="多行注释"><a class="markdownIt-Anchor" href="#多行注释"></a> 多行注释</h1>
 <p>将需要注释的文本放进<code>\iffalse</code>和<code>\fi</code>之间.</p>
+<h1 id="属于符号in的反向符号"><a class="markdownIt-Anchor" href="#属于符号in的反向符号"></a> 属于符号<code>\in</code>的反向符号</h1>
+<p>用<code>\ni</code>即可.</p>
 ]]></content>
       <tags>
         <tag>LaTeX</tag>
