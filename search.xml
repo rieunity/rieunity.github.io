@@ -15,7 +15,6 @@
 <th></th>
 <th></th>
 <th></th>
-<th></th>
 </tr>
 </thead>
 <tbody>
@@ -27,7 +26,6 @@
 <td>4</td>
 <td>5</td>
 <td>6</td>
-<td>7</td>
 </tr>
 <tr>
 <td>唱名</td>
@@ -37,7 +35,6 @@
 <td>fa</td>
 <td>so</td>
 <td>la</td>
-<td>xi</td>
 </tr>
 <tr>
 <td>音名</td>
@@ -47,7 +44,6 @@
 <td>F</td>
 <td>G</td>
 <td>A</td>
-<td>B</td>
 </tr>
 </tbody>
 </table>
