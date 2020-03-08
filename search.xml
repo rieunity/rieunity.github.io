@@ -1,6 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>乐理基础</title>
+    <url>/2020/03/08/%E4%B9%90%E7%90%86%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="基础入门"><a href="#基础入门" class="headerlink" title="基础入门"></a>基础入门</h1><h2 id="认识简谱"><a href="#认识简谱" class="headerlink" title="认识简谱"></a>认识简谱</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>简谱</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td></td>
+</tr>
+<tr>
+<td>唱名</td>
+<td>do</td>
+<td>re</td>
+<td>mi</td>
+<td>fa</td>
+<td>so</td>
+<td>la</td>
+<td>xi</td>
+<td></td>
+</tr>
+<tr>
+<td>音名</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>G</td>
+<td>A</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>升降音:#1(升) b3(降)</p>
+<h2 id="音的高低"><a href="#音的高低" class="headerlink" title="音的高低"></a>音的高低</h2><p>低音:下面加一点<br>中音:不加点<br>高音:上面加一点<br>倍低音:下面加两点(两点纵向排列)<br>倍高音:上面加两点</p>
+<h2 id="音的长短"><a href="#音的长短" class="headerlink" title="音的长短"></a>音的长短</h2><p>全音符:整圆,4拍<br>2分音符:半圆,2拍<br>4分音符: 1/4圆,1拍<br>8分音符:1/8圆,1/2拍<br>16分音符:1/16圆,1/4拍<br>32分音符:1/32圆,1/8拍<br>64分音符:1/64圆,1/16拍</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>全音符</th>
+<th>二分音符</th>
+<th>四分音符</th>
+<th>八分音符</th>
+<th>十六分音符</th>
+<th>三十二分音符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X - - -</td>
+<td>X - X -</td>
+<td>X X X X</td>
+<td><u>XX</u> <u>XX</u> <u>XX</u> <u>XX</u></td>
+<td>双下划线并且有16个X</td>
+<td>以此类推</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="音的休止"><a href="#音的休止" class="headerlink" title="音的休止"></a>音的休止</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>全音符</th>
+<th>二分音符</th>
+<th>四分音符</th>
+<th>八分音符</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X - - -</td>
+<td>X -</td>
+<td>X</td>
+<td><u>X</u></td>
+<td>…</td>
+</tr>
+<tr>
+<td>全休止符</td>
+<td>二分休止符</td>
+<td>四分休止符</td>
+<td>八分休止符</td>
+<td>…</td>
+</tr>
+<tr>
+<td>0 0 0 0</td>
+<td>0 0</td>
+<td>0</td>
+<td><u>0</u></td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <tags>
+        <tag>Music</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Notes about Nazarov&#39;s Paper Part II</title>
     <url>/2020/03/02/Notes-about-Nazarov-s-Paper-Part-II/</url>
     <content><![CDATA[<p>This is the second learning note about Nazarov’s paper.</p>
