@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Notes about GTM 249: Classical Fourier Analysis</title>
+    <url>/2020/03/18/Notes-about-GTM-249-Classical-Fourier-Analysis/</url>
+    <content><![CDATA[<p>This is a learning note about GTM 249: <em>Classical Fourier Analysis</em>.</p>
+<a class="btn" href="/download/Notes/Mathematics/HA/20-03-10/20-03-10.pdf" title="Notes about GTM 249: Classical Fourier Analysis"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
+      <tags>
+        <tag>Harmonic Analysis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>UltiSnips设置冲突</title>
     <url>/2020/03/16/UltiSnips%E8%AE%BE%E7%BD%AE%E5%86%B2%E7%AA%81/</url>
-    <content><![CDATA[<p>这里会成为记载UltiSnips插件中所有snippets冲突的地方:</p>
-<h2 id="alpha后面直接加上标会冲突"><a class="markdownIt-Anchor" href="#alpha后面直接加上标会冲突"></a> <code>\alpha</code>后面直接加上标会冲突</h2>
-<p>因为上标是<code>td</code>片段,会和前面组成<code>hat</code>片段</p>
-<h2 id="字母p后面不能直接输入int片段"><a class="markdownIt-Anchor" href="#字母p后面不能直接输入int片段"></a> 字母<code>p</code>后面不能直接输入<code>int</code>片段</h2>
-<p>因为会组合成<code>pi</code>片段</p>
+    <content><![CDATA[<p>这里会成为记载UltiSnips插件中所有snippets冲突的地方:  </p>
+<h2 id="alpha后面直接加上标会冲突"><a href="#alpha后面直接加上标会冲突" class="headerlink" title="\alpha后面直接加上标会冲突"></a><code>\alpha</code>后面直接加上标会冲突</h2><p>因为上标是<code>td</code>片段,会和前面组成<code>hat</code>片段  </p>
+<h2 id="字母p后面不能直接输入int片段"><a href="#字母p后面不能直接输入int片段" class="headerlink" title="字母p后面不能直接输入int片段"></a>字母<code>p</code>后面不能直接输入<code>int</code>片段</h2><p>因为会组合成<code>pi</code>片段<br><a id="more"></a></p>
 ]]></content>
       <tags>
         <tag>vim</tag>
