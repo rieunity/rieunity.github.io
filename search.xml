@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vim+vimtex+zathura backward search</title>
+    <url>/2020/04/20/vim-vimtex-zathura-backward-search/</url>
+    <content><![CDATA[<p>以前一直没有用zathura的backward search功能,用的时候发现不好用.原因是从终端打开的vim没有servername.想验证以下就输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:echo v:servername</span><br></pre></td></tr></table></figure>
+<p>输出是空白.<br />
+一个简单的解决方案就是自己手动加上servername,比如当打开body.tex文件时可以输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim --servername rieunity body.tex</span><br></pre></td></tr></table></figure>
+<p>或者在操作系统中加一个alias</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alias vim&#x3D;&#39;vim --servername rieunity&#39;</span><br></pre></td></tr></table></figure>
+<p>参考链接:<br />
+<a href="https://github.com/lervag/vimtex/issues/206" target="_blank" rel="noopener">https://github.com/lervag/vimtex/issues/206</a></p>
+]]></content>
+      <tags>
+        <tag>LaTeX</tag>
+        <tag>Vim</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MATH 247A笔记</title>
     <url>/2020/04/13/MATH-247A%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>这是一个关于阅读Terence Tao的Harmonic Analysis讲义的笔记.</p>
