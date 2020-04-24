@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>关于作笔记的一些感想</title>
+    <url>/2020/04/24/%E5%85%B3%E4%BA%8E%E4%BD%9C%E7%AC%94%E8%AE%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E6%84%9F%E6%83%B3/</url>
+    <content><![CDATA[<p>之前用latex做了许多学习笔记,感觉有优点也有缺点.</p>
+<p>优点就是一些自己觉得看懂但实际上没懂甚至理解错误的东西在做笔记的时候能够发现并更加深刻地领会理解.</p>
+<p>缺点就是耗时.一方面是我自己的领会和想法太少,完全停留在努力理解层面,所以限制我总是在翻译.另一方面是自己的linux系统中文输入法真的不行,安装其它的又老是出错.</p>
+<p>耗时是致命的,所以以后可能会很少做学习笔记了.</p>
+<p>但是如果觉得有必要还是会做.</p>
+<p>如果产生自己的想法或者理解也会去做.</p>
+]]></content>
+  </entry>
+  <entry>
     <title>vim+vimtex+zathura backward search</title>
     <url>/2020/04/20/vim-vimtex-zathura-backward-search/</url>
     <content><![CDATA[<p>以前一直没有用zathura的backward search功能,用的时候发现不好用.原因是从终端打开的vim没有servername.想验证以下就输入</p>
