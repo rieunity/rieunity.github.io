@@ -255,15 +255,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>我是89hao.<br />
-这是我的第n个第一篇博客(换了好几回).</p>
-<p>顺便写以下关于pandoc将latex文件转换为markdown文件的总结.<br />
-我用的是命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure>
-<p>如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个.<br />
-但是latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留.<br />
-mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不掉的错,大概率是转译问题,而且mathjax又有点慢.<br />
-除了应用于wordpress的latex2wordpress, pandoc和完全保留原样式的html2pdfEX,还没有找到特别好的转换软件.</p>
+        <p>我是89hao. 这是我的第n个第一篇博客(换了好几回).</p>
+<p>顺便写以下关于pandoc将latex文件转换为markdown文件的总结. 我用的是命令 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure> 如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个. 但是latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留. mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不掉的错,大概率是转译问题,而且mathjax又有点慢. 除了应用于wordpress的latex2wordpress, pandoc和完全保留原样式的html2pdfEX,还没有找到特别好的转换软件.</p>
 
     </div>
 
@@ -355,12 +348,12 @@ mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -393,7 +386,7 @@ mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不�
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -499,10 +492,53 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+<script type="text/x-mathjax-config">
 
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 

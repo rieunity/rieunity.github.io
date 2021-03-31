@@ -251,15 +251,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>以前一直没有用zathura的backward search功能,用的时候发现不好用.原因是从终端打开的vim没有servername.想验证以下就输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:echo v:servername</span><br></pre></td></tr></table></figure>
-<p>输出是空白.<br />
-一个简单的解决方案就是自己手动加上servername,比如当打开body.tex文件时可以输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --servername rieunity body.tex</span><br></pre></td></tr></table></figure>
-<p>或者在操作系统中加一个alias</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias vim&#x3D;&quot;vim --servername rieunity&quot;</span><br></pre></td></tr></table></figure>
+        <p>以前一直没有用zathura的backward search功能,用的时候发现不好用.原因是从终端打开的vim没有servername.想验证以下就输入 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:echo v:servername</span><br></pre></td></tr></table></figure> 输出是空白. 一个简单的解决方案就是自己手动加上servername,比如当打开body.tex文件时可以输入 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --servername rieunity body.tex</span><br></pre></td></tr></table></figure> 或者在操作系统中加一个alias <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias vim&#x3D;&quot;vim --servername rieunity&quot;</span><br></pre></td></tr></table></figure></p>
 <p>参考链接:<br />
-<a href="https://github.com/lervag/vimtex/issues/206" target="_blank" rel="noopener">https://github.com/lervag/vimtex/issues/206</a></p>
+<a href="https://github.com/lervag/vimtex/issues/206" target="_blank" rel="noopener" class="uri">https://github.com/lervag/vimtex/issues/206</a></p>
 
     </div>
 
@@ -358,12 +352,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -396,7 +390,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -502,10 +496,53 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+<script type="text/x-mathjax-config">
 
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 

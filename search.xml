@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Notes about elementary algebraic geometry</title>
+    <url>/2021/03/31/Notes-about-elementary-algebraic-geometry/</url>
+    <content><![CDATA[<p>These notes was written when I studied algebraic geometry myself in YouTube from the channel ICTP Math, the speaker of Lothar G&quot;{o}ttsche. The notes include all 20 lectures of the course.</p>
+<a class="btn" href="/download/Notes/Mathematics/lessons/algebraic_geometry_1/algebraic_geometry_1.pdf" title="Elementary Algebraic Geometry"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
+      <tags>
+        <tag>Algebraic Geometry</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>将学生提交的电子文件作业重命名成统一的格式</title>
     <url>/2020/05/24/%E5%B0%86%E5%AD%A6%E7%94%9F%E6%8F%90%E4%BA%A4%E7%9A%84%E7%94%B5%E5%AD%90%E6%96%87%E4%BB%B6%E4%BD%9C%E4%B8%9A%E9%87%8D%E5%91%BD%E5%90%8D%E6%88%90%E7%BB%9F%E4%B8%80%E7%9A%84%E6%A0%BC%E5%BC%8F/</url>
-    <content><![CDATA[<p>因为疫情,很多课程都改为线上上课,作业也交的是纸质版,尽管老师强调文件命名要统一格式,但还是出现了各种各样的命名方式.为了重新将文件统一命名,写了下面的程序.原理就是读取学生名单文件(Excel文件),并提取每一个学生的姓名和学号,然后查询上交的作业文件名中包含学号或者学生姓名的文件统一重新命名.<br>这里用到了xlrd模块,通过它来读取Excel表格中的学生信息.Excel表格的前三列分别是学生的学号,班级以及姓名.例如在名单表格中,一位学生在表格的前三列信息分别是1121100210,1211101,小明,而ta提交的作业文件名却只是1121100210小明.pdf或者1211101小明.pdf,我们希望最终修改后的文件名为1121100210-1211101-小明.pdf的形式.<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExcelData</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 初始化方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data_path, sheetname)</span>:</span></span><br><span class="line">        <span class="comment"># 定义一个属性接收文件路径</span></span><br><span class="line">        self.data_path = data_path</span><br><span class="line">        <span class="comment"># 定义一个属性接收工作表名称</span></span><br><span class="line">        self.sheetname = sheetname</span><br><span class="line">        <span class="comment"># 使用xlrd模块打开excel表读取数据</span></span><br><span class="line">        self.data = xlrd.open_workbook(self.data_path)</span><br><span class="line">        <span class="comment"># 根据工作表的名称获取工作表中的内容</span></span><br><span class="line">        self.table = self.data.sheet_by_name(self.sheetname)</span><br><span class="line">        <span class="comment"># 获取工作表的有效行数</span></span><br><span class="line">        self.rowNum = self.table.nrows</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成第i行学生的新文件名</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">newName</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="comment"># 定义一个空变量</span></span><br><span class="line">        data = <span class="string">""</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            c_cell = self.table.cell_value(i,j)</span><br><span class="line">            c_cell = str(c_cell)</span><br><span class="line">            <span class="comment"># 将数据加进变量中</span></span><br><span class="line">            <span class="keyword">if</span> j != <span class="number">0</span>:</span><br><span class="line">                data = data + <span class="string">"-"</span> + c_cell</span><br><span class="line">            <span class="keyword">else</span>:   </span><br><span class="line">                data = c_cell</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取第i行学生的学号</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">studentNumber</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        studentnumber = self.table.cell_value(i,<span class="number">0</span>)</span><br><span class="line">        studentnumber = str(studentnumber)</span><br><span class="line">        <span class="keyword">return</span> studentnumber</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取第i行学生的姓名</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">studentName</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        studentname = self.table.cell_value(i,<span class="number">2</span>)</span><br><span class="line">        studentname = str(studentname)</span><br><span class="line">        <span class="keyword">return</span> studentname</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找学生的作业是否存在修改学生的作业文件名</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changeName</span><span class="params">(studentname, studentnumber, newname)</span>:</span></span><br><span class="line">    <span class="comment"># 获得工作目录的相对地址</span></span><br><span class="line">    path = os.getcwd()</span><br><span class="line">    <span class="comment"># 需要修改名字的文件目录地址</span></span><br><span class="line">    filespath = path + <span class="string">"\\files"</span></span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(filespath):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="comment"># 查询是否有原文件名包含学生的姓名或者学号,如存在就进入判断体</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span>((file.find(studentname)&lt;<span class="number">0</span> <span class="keyword">and</span> file.find(studentnumber)&lt;<span class="number">0</span>)):</span><br><span class="line">                <span class="comment"># 获得匹配的原文件的文件格式后缀</span></span><br><span class="line">                extension = os.path.splitext(file)[<span class="number">1</span>]</span><br><span class="line">                <span class="comment"># 新文件的文件路径</span></span><br><span class="line">                newnamedir = path + <span class="string">"\\newfiles\\"</span> + newname + str(extension)</span><br><span class="line">                <span class="comment"># 旧文件的文件路径</span></span><br><span class="line">                oldnamedir = path + <span class="string">"\\files\\"</span> + file</span><br><span class="line">                <span class="comment"># 判断要复制到的文件夹中是否已经有新文件</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">not</span>(os.path.exists(newnamedir))):</span><br><span class="line">                    <span class="comment"># 复制并且重命名文件</span></span><br><span class="line">                    copyfile(oldnamedir, newnamedir)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    data_path = <span class="string">"学生成绩.xls"</span></span><br><span class="line">    sheetname = <span class="string">"sheet1"</span></span><br><span class="line">    data = ExcelData(data_path, sheetname)</span><br><span class="line">    rows = data.rowNum </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,rows):</span><br><span class="line">        newname = data.newName(i)</span><br><span class="line">        studentnumber = data.studentNumber(i)</span><br><span class="line">        studentname = data.studentName(i)</span><br><span class="line">        changeName(studentname, studentnumber, newname)</span><br></pre></td></tr></table></figure></p>
+    <content><![CDATA[<p>因为疫情,很多课程都改为线上上课,作业也交的是纸质版,尽管老师强调文件命名要统一格式,但还是出现了各种各样的命名方式.为了重新将文件统一命名,写了下面的程序.原理就是读取学生名单文件(Excel文件),并提取每一个学生的姓名和学号,然后查询上交的作业文件名中包含学号或者学生姓名的文件统一重新命名.<br />
+这里用到了xlrd模块,通过它来读取Excel表格中的学生信息.Excel表格的前三列分别是学生的学号,班级以及姓名.例如在名单表格中,一位学生在表格的前三列信息分别是1121100210,1211101,小明,而ta提交的作业文件名却只是1121100210小明.pdf或者1211101小明.pdf,我们希望最终修改后的文件名为1121100210-1211101-小明.pdf的形式. <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExcelData</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 初始化方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data_path, sheetname)</span>:</span></span><br><span class="line">        <span class="comment"># 定义一个属性接收文件路径</span></span><br><span class="line">        self.data_path = data_path</span><br><span class="line">        <span class="comment"># 定义一个属性接收工作表名称</span></span><br><span class="line">        self.sheetname = sheetname</span><br><span class="line">        <span class="comment"># 使用xlrd模块打开excel表读取数据</span></span><br><span class="line">        self.data = xlrd.open_workbook(self.data_path)</span><br><span class="line">        <span class="comment"># 根据工作表的名称获取工作表中的内容</span></span><br><span class="line">        self.table = self.data.sheet_by_name(self.sheetname)</span><br><span class="line">        <span class="comment"># 获取工作表的有效行数</span></span><br><span class="line">        self.rowNum = self.table.nrows</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成第i行学生的新文件名</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">newName</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="comment"># 定义一个空变量</span></span><br><span class="line">        data = <span class="string">""</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            c_cell = self.table.cell_value(i,j)</span><br><span class="line">            c_cell = str(c_cell)</span><br><span class="line">            <span class="comment"># 将数据加进变量中</span></span><br><span class="line">            <span class="keyword">if</span> j != <span class="number">0</span>:</span><br><span class="line">                data = data + <span class="string">"-"</span> + c_cell</span><br><span class="line">            <span class="keyword">else</span>:   </span><br><span class="line">                data = c_cell</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取第i行学生的学号</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">studentNumber</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        studentnumber = self.table.cell_value(i,<span class="number">0</span>)</span><br><span class="line">        studentnumber = str(studentnumber)</span><br><span class="line">        <span class="keyword">return</span> studentnumber</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取第i行学生的姓名</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">studentName</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        studentname = self.table.cell_value(i,<span class="number">2</span>)</span><br><span class="line">        studentname = str(studentname)</span><br><span class="line">        <span class="keyword">return</span> studentname</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找学生的作业是否存在修改学生的作业文件名</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changeName</span><span class="params">(studentname, studentnumber, newname)</span>:</span></span><br><span class="line">    <span class="comment"># 获得工作目录的相对地址</span></span><br><span class="line">    path = os.getcwd()</span><br><span class="line">    <span class="comment"># 需要修改名字的文件目录地址</span></span><br><span class="line">    filespath = path + <span class="string">"\\files"</span></span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(filespath):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="comment"># 查询是否有原文件名包含学生的姓名或者学号,如存在就进入判断体</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span>((file.find(studentname)&lt;<span class="number">0</span> <span class="keyword">and</span> file.find(studentnumber)&lt;<span class="number">0</span>)):</span><br><span class="line">                <span class="comment"># 获得匹配的原文件的文件格式后缀</span></span><br><span class="line">                extension = os.path.splitext(file)[<span class="number">1</span>]</span><br><span class="line">                <span class="comment"># 新文件的文件路径</span></span><br><span class="line">                newnamedir = path + <span class="string">"\\newfiles\\"</span> + newname + str(extension)</span><br><span class="line">                <span class="comment"># 旧文件的文件路径</span></span><br><span class="line">                oldnamedir = path + <span class="string">"\\files\\"</span> + file</span><br><span class="line">                <span class="comment"># 判断要复制到的文件夹中是否已经有新文件</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">not</span>(os.path.exists(newnamedir))):</span><br><span class="line">                    <span class="comment"># 复制并且重命名文件</span></span><br><span class="line">                    copyfile(oldnamedir, newnamedir)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    data_path = <span class="string">"学生成绩.xls"</span></span><br><span class="line">    sheetname = <span class="string">"sheet1"</span></span><br><span class="line">    data = ExcelData(data_path, sheetname)</span><br><span class="line">    rows = data.rowNum </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,rows):</span><br><span class="line">        newname = data.newName(i)</span><br><span class="line">        studentnumber = data.studentNumber(i)</span><br><span class="line">        studentname = data.studentName(i)</span><br><span class="line">        changeName(studentname, studentnumber, newname)</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
         <tag>Python</tag>
@@ -12,50 +23,15 @@
   <entry>
     <title>爱因斯坦方程</title>
     <url>/2020/04/29/%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E6%96%B9%E7%A8%8B/</url>
-    <content><![CDATA[<p>写这篇博客一方面是为了回忆爱因斯坦方程</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>g</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mi>R</mi><mo>=</mo><mn>8</mn><mi>π</mi><mi>G</mi><msub><mi>T</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub></mrow><annotation encoding="application/x-tex">R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=8\pi GT_{\mu\nu}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord mathdefault">G</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span></p>
-<p>的一个&quot;推导&quot;过程,另一方面试一试katex对数学公式的支持如何.</p>
+    <content><![CDATA[<p>写这篇博客一方面是为了回忆爱因斯坦方程 <span class="math display">\[R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=8\pi GT_{\mu\nu}\]</span> 的一个&quot;推导&quot;过程,另一方面试一试katex对数学公式的支持如何.</p>
 <p>这里假设我们已经具备黎曼张量,能量动量张量相关的知识.一旦有了这个背景,得到爱因斯坦方程的思路就变得异常清晰和简单.</p>
 <p>因为牛顿引力理论是爱因斯坦广义相对论在足够平坦时空下的近似,所以为了得到爱因斯坦方程,最简单的方式就是把牛顿引力理论以张量形式(也就是保证坐标不变)写出来.</p>
-<p>牛顿引力理论中,我们有物体加速度和引力势能之间的表达式</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext mathvariant="bold">a</mtext><mo>=</mo><mo>−</mo><mi mathvariant="normal">∇</mi><mi mathvariant="normal">Φ</mi></mrow><annotation encoding="application/x-tex">\textbf{a}=-\nabla \Phi     
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord text"><span class="mord textbf">a</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord">∇</span><span class="mord">Φ</span></span></span></span></span></p>
-<p>以及引力和物质密度之间的关系</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="normal">∇</mi><mn>2</mn></msup><mi mathvariant="normal">Φ</mi><mo>=</mo><mn>4</mn><mi>π</mi><mi>G</mi><mi>ρ</mi></mrow><annotation encoding="application/x-tex">\nabla^2\Phi=4\pi G\rho  
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8641079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord">Φ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord mathdefault">G</span><span class="mord mathdefault">ρ</span></span></span></span></span></p>
+<p>牛顿引力理论中,我们有物体加速度和引力势能之间的表达式 <span class="math display">\[\textbf{a}=-\nabla \Phi\]</span> 以及引力和物质密度之间的关系 <span class="math display">\[\nabla^2\Phi=4\pi G\rho\]</span></p>
 <a id="more"></a>
-<p>我们要做的就是把上述式子写成张量的形式,这就需要我们知道式子中各个物理量的所对应的张量形式的推广是什么.在第二个式子中,右边物质密度的推广就是能量动量张量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub></mrow><annotation encoding="application/x-tex">T_{\mu\nu}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>,而左边 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="normal">∇</mi><mn>2</mn></msup><mi mathvariant="normal">Φ</mi></mrow><annotation encoding="application/x-tex">\nabla^2\Phi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord">Φ</span></span></span></span> 则需要由度规张量来代替(这是因为在第一个式子中可以得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∇</mi><mi mathvariant="normal">Φ</mi></mrow><annotation encoding="application/x-tex">\nabla\Phi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">∇</span><span class="mord">Φ</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>g</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub></mrow><annotation encoding="application/x-tex">g_{\mu\nu}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>或者说<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi mathvariant="normal">Γ</mi><mrow><mi>μ</mi><mi>ν</mi></mrow><mi>ρ</mi></msubsup></mrow><annotation encoding="application/x-tex">\Gamma^{\rho}_{\mu\nu}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.066438em;vertical-align:-0.383108em;"></span><span class="mord"><span class="mord">Γ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">ρ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.383108em;"><span></span></span></span></span></span></span></span></span></span>有关).</p>
-<p>最简单的实现上述向张量形式变身的方法就是利用Ricci张量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub></mrow><annotation encoding="application/x-tex">R_{\mu\nu}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>,将式子写成</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mi>κ</mi><msub><mi>T</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub></mrow><annotation encoding="application/x-tex">R_{\mu\nu}=\kappa T_{\mu\nu}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">κ</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span></p>
-<p>但是上面的式子有一个问题,就是能量守恒的问题.能量守恒可以用式子</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="normal">∇</mi><mi>μ</mi></msup><msub><mi>T</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\nabla^{\mu}T_{\mu\nu}=0
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0005em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span></p>
-<p>来表示,这样我们就会推出</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="normal">∇</mi><mi>μ</mi></msup><msub><mi>R</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\nabla^\mu R_{\mu\nu}=0
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0005em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">μ</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span></p>
-<p>我门通过Bianchi identity可以得到</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="normal">∇</mi><mi>μ</mi></msup><msub><mi>R</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi mathvariant="normal">∇</mi><mi>ν</mi></msub><mi>R</mi></mrow><annotation encoding="application/x-tex">\nabla ^\mu R_{\mu\nu}= \frac{1}{2}\nabla_\nu R
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0005em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">μ</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span></span></p>
-<p>结合之前提出的假设式子我们得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mo>=</mo><mi>κ</mi><msup><mi>g</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msup><msub><mi>T</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mi>κ</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">R=\kappa g ^{\mu\nu}T_{\mu\nu}=\kappa T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">κ</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">κ</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>,把这些放在一起就得到</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">∇</mi><mi>μ</mi></msub><mi>T</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\nabla_\mu T=0
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">μ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span></p>
-<p>对于一个标量来说协变导数和普通偏导数一样,所以上式告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>在时空的任意处都是常量,但这是不可能的.</p>
-<p>为了解决这个问题,我们需要将左边替换成一个更加复杂的张量(这里仅仅指写法上的复杂).这个量就是爱因斯坦张量,</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>G</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><msub><mi>R</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>R</mi><msub><mi>g</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub></mrow><annotation encoding="application/x-tex">G_{\mu\nu}=R_{\mu\nu}-\frac{1}{2}Rg_{\mu\nu}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span></p>
-<p>它满足</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="normal">∇</mi><mi>μ</mi></msup><msub><mi>G</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\nabla^\mu G_{\mu\nu}=0
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0005em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">μ</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span></p>
-<p>实际上,它等价于上面通过Bianchi identity得到的式子.<br />
-因此我们可以将方程改进为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>G</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mi>κ</mi><msub><mi>T</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub></mrow><annotation encoding="application/x-tex">G_{\mu\nu}=\kappa T_{\mu\nu}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">κ</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span></p>
-<p>我门希望这个方程在牛顿极限下能够回到引力势的泊松方程,并由此得到常数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>κ</mi></mrow><annotation encoding="application/x-tex">\kappa</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">κ</span></span></span></span>与引力常数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span>的关系.这里略去过程,总之最后可以通过比对得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>κ</mi><mo>=</mo><mn>8</mn><mi>π</mi><mi>G</mi></mrow><annotation encoding="application/x-tex">\kappa=8\pi G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">κ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord mathdefault">G</span></span></span></span>.</p>
-<p>通过这样的一个思路,我们就得到了爱因斯坦方程:</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>g</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mi>R</mi><mo>=</mo><mn>8</mn><mi>π</mi><mi>G</mi><msub><mi>T</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=8\pi G T_{\mu\nu}.
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord mathdefault">G</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">μ</span><span class="mord mathdefault mtight" style="margin-right:0.06366em;">ν</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord">.</span></span></span></span></span></p>
+<p>我们要做的就是把上述式子写成张量的形式,这就需要我们知道式子中各个物理量的所对应的张量形式的推广是什么.在第二个式子中,右边物质密度的推广就是能量动量张量<span class="math inline">\(T _{\mu\nu}\)</span>,而左边<span class="math inline">\(\nabla^2\Phi\)</span>则需要由度规张量来代替(这是因为在第一个式子中可以得到<span class="math inline">\(\nabla\Phi\)</span>与<span class="math inline">\(g\_{\mu\nu}\)</span>或者说<span class="math inline">\(\Gamma^{\rho}\_{\mu\nu}\)</span>有关).</p>
+<p>最简单的实现上述向张量形式变身的方法就是利用<span class="math inline">\(\mathrm{Ricci}\)</span>张量<span class="math inline">\(R\_{\mu\nu}\)</span>,将式子写成 <span class="math display">\[R_{\mu\nu}=\kappa T_{\mu\nu}\]</span> 但是上面的式子有一个问题,就是能量守恒的问题.能量守恒可以用式子 <span class="math display">\[\nabla^{\mu}T_{\mu\nu}=0\]</span> 来表示,这样我们就会推出 <span class="math display">\[\nabla^\mu R_{\mu\nu}=0\]</span> 我门通过Bianchi identity可以得到 <span class="math display">\[\nabla ^\mu R_{\mu\nu}= \frac{1}{2}\nabla_\nu R\]</span> 结合之前提出的假设式子我们得到<span class="math inline">\(R=\kappa g ^{\mu\nu}T_{\mu\nu}=\kappa T\)</span>,把这些放在一起就得到 <span class="math display">\[\nabla_\mu T=0\]</span> 对于一个标量来说协变导数和普通偏导数一样,所以上式告诉我们<span class="math inline">\(T\)</span>在时空的任意处都是常量,但这是不可能的.</p>
+<p>为了解决这个问题,我们需要将左边替换成一个更加复杂的张量(这里仅仅指写法上的复杂).这个量就是爱因斯坦张量, <span class="math display">\[G_{\mu\nu}=R_{\mu\nu}-\frac{1}{2}Rg_{\mu\nu}\]</span> 它满足 <span class="math display">\[\nabla^\mu G_{\mu\nu}=0\]</span> 实际上,它等价于上面通过Bianchi identity得到的式子. 因此我们可以将方程改进为 <span class="math display">\[G_{\mu\nu}=\kappa T_{\mu\nu}\]</span> 我门希望这个方程在牛顿极限下能够回到引力势的泊松方程,并由此得到常数<span class="math inline">\(\kappa\)</span>与引力常数<span class="math inline">\(G\)</span>的关系.这里略去过程,总之最后可以通过比对得到<span class="math inline">\(\kappa=8\pi G\)</span>.</p>
+<p>通过这样的一个思路,我们就得到了爱因斯坦方程: <span class="math display">\[R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=8\pi G T_{\mu\nu}.\]</span></p>
 <p>可以看到式子左边完全是几何量,而式子右边完全是物理量.</p>
 ]]></content>
       <tags>
@@ -76,15 +52,9 @@
   <entry>
     <title>vim+vimtex+zathura backward search</title>
     <url>/2020/04/20/vim-vimtex-zathura-backward-search/</url>
-    <content><![CDATA[<p>以前一直没有用zathura的backward search功能,用的时候发现不好用.原因是从终端打开的vim没有servername.想验证以下就输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:echo v:servername</span><br></pre></td></tr></table></figure>
-<p>输出是空白.<br />
-一个简单的解决方案就是自己手动加上servername,比如当打开body.tex文件时可以输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim --servername rieunity body.tex</span><br></pre></td></tr></table></figure>
-<p>或者在操作系统中加一个alias</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alias vim&#x3D;&quot;vim --servername rieunity&quot;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>以前一直没有用zathura的backward search功能,用的时候发现不好用.原因是从终端打开的vim没有servername.想验证以下就输入 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:echo v:servername</span><br></pre></td></tr></table></figure> 输出是空白. 一个简单的解决方案就是自己手动加上servername,比如当打开body.tex文件时可以输入 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim --servername rieunity body.tex</span><br></pre></td></tr></table></figure> 或者在操作系统中加一个alias <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alias vim&#x3D;&quot;vim --servername rieunity&quot;</span><br></pre></td></tr></table></figure></p>
 <p>参考链接:<br />
-<a href="https://github.com/lervag/vimtex/issues/206" target="_blank" rel="noopener">https://github.com/lervag/vimtex/issues/206</a></p>
+<a href="https://github.com/lervag/vimtex/issues/206" target="_blank" rel="noopener" class="uri">https://github.com/lervag/vimtex/issues/206</a></p>
 ]]></content>
       <tags>
         <tag>LaTeX</tag>
@@ -114,12 +84,10 @@
   <entry>
     <title>UltiSnips设置冲突</title>
     <url>/2020/03/16/UltiSnips%E8%AE%BE%E7%BD%AE%E5%86%B2%E7%AA%81/</url>
-    <content><![CDATA[<p>这里会成为记载UltiSnips插件中所有snippets冲突的地方:</p>
-<h2 id="alpha后面直接加上标会冲突"><a class="markdownIt-Anchor" href="#alpha后面直接加上标会冲突"></a> <code>\alpha</code>后面直接加上标会冲突</h2>
-<p>因为上标是<code>td</code>片段,会和前面组成<code>hat</code>片段</p>
-<h2 id="字母p后面不能直接输入int片段"><a class="markdownIt-Anchor" href="#字母p后面不能直接输入int片段"></a> 字母<code>p</code>后面不能直接输入<code>int</code>片段</h2>
-<p>因为会组合成<code>pi</code>片段</p>
-<a id="more"></a>
+    <content><![CDATA[<p>这里会成为记载UltiSnips插件中所有snippets冲突的地方:<br />
+## <code>\alpha</code>后面直接加上标会冲突 因为上标是<code>td</code>片段,会和前面组成<code>hat</code>片段<br />
+## 字母<code>p</code>后面不能直接输入<code>int</code>片段<br />
+因为会组合成<code>pi</code>片段 <a id="more"></a></p>
 ]]></content>
       <tags>
         <tag>vim</tag>
@@ -128,8 +96,9 @@
   <entry>
     <title>Fubini&#39;s Theorem</title>
     <url>/2020/03/16/Fubini-s-Theorem/</url>
-    <content><![CDATA[<p>This is a note about Fubini’s Theorem, the source is a Real Analysis note of CUHK.</p>
-<a class="btn" href="/download/Notes/Mathematics/20-03-16/fubini.pdf" title="Fubini's Theorem"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+    <content><![CDATA[<p>This is a note about Fubini's Theorem, the source is a Real Analysis note of CUHK.</p>
+<a class="btn" href="/download/Notes/Mathematics/20-03-16/fubini.pdf" title="Fubini's Theorem"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
       <tags>
         <tag>Real Analysis</tag>
       </tags>
@@ -137,59 +106,15 @@
   <entry>
     <title>乐理基础</title>
     <url>/2020/03/08/%E4%B9%90%E7%90%86%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="基础入门"><a class="markdownIt-Anchor" href="#基础入门"></a> 基础入门</h1>
-<h2 id="认识简谱"><a class="markdownIt-Anchor" href="#认识简谱"></a> 认识简谱</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>简谱</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-<td>6</td>
-</tr>
-<tr>
-<td>唱名</td>
-<td>do</td>
-<td>re</td>
-<td>mi</td>
-<td>fa</td>
-<td>so</td>
-<td>la</td>
-</tr>
-<tr>
-<td>音名</td>
-<td>C</td>
-<td>D</td>
-<td>E</td>
-<td>F</td>
-<td>G</td>
-<td>A</td>
-</tr>
-</tbody>
-</table>
-<p>升降音:#1(升) b3(降)</p>
-<h2 id="音的高低"><a class="markdownIt-Anchor" href="#音的高低"></a> 音的高低</h2>
-<p>低音:下面加一点<br />
+    <content><![CDATA[<h1 id="基础入门">基础入门</h1>
+<h2 id="认识简谱">认识简谱</h2>
+<p>| | | | | | | | -|-|-|-|-|-|-|- 简谱| 1|2|3|4|5|6|7 唱名| do| re|mi|fa|so|la|xi 音名|C|D|E|F|G|A|B 升降音:#1(升) b3(降) ## 音的高低 低音:下面加一点<br />
 中音:不加点<br />
 高音:上面加一点<br />
 倍低音:下面加两点(两点纵向排列)<br />
 倍高音:上面加两点</p>
 <a id="more"></a>
-<h2 id="音的长短"><a class="markdownIt-Anchor" href="#音的长短"></a> 音的长短</h2>
+<h2 id="音的长短">音的长短</h2>
 <p>全音符:整圆,4拍<br />
 2分音符:半圆,2拍<br />
 4分音符: 1/4圆,1拍<br />
@@ -199,58 +124,58 @@
 64分音符:1/64圆,1/16拍</p>
 <table>
 <thead>
-<tr>
-<th>全音符</th>
-<th>二分音符</th>
-<th>四分音符</th>
-<th>八分音符</th>
-<th>十六分音符</th>
-<th>三十二分音符</th>
+<tr class="header">
+<th align="left">全音符</th>
+<th align="left">二分音符</th>
+<th align="left">四分音符</th>
+<th align="left">八分音符</th>
+<th align="left">十六分音符</th>
+<th align="left">三十二分音符</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>X - - -</td>
-<td>X - X -</td>
-<td>X X X X</td>
-<td><u>XX</u> <u>XX</u> <u>XX</u> <u>XX</u></td>
-<td>双下划线并且有16个X</td>
-<td>以此类推</td>
+<tr class="odd">
+<td align="left">X - - -</td>
+<td align="left">X - X -</td>
+<td align="left">X X X X</td>
+<td align="left"><u>XX</u> <u>XX</u> <u>XX</u> <u>XX</u></td>
+<td align="left">双下划线并且有16个X</td>
+<td align="left">以此类推</td>
 </tr>
 </tbody>
 </table>
-<h2 id="音的休止"><a class="markdownIt-Anchor" href="#音的休止"></a> 音的休止</h2>
+<h2 id="音的休止">音的休止</h2>
 <table>
 <thead>
-<tr>
-<th>全音符</th>
-<th>二分音符</th>
-<th>四分音符</th>
-<th>八分音符</th>
-<th>…</th>
+<tr class="header">
+<th align="left">全音符</th>
+<th align="left">二分音符</th>
+<th align="left">四分音符</th>
+<th align="left">八分音符</th>
+<th align="left">...</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>X - - -</td>
-<td>X -</td>
-<td>X</td>
-<td><u>X</u></td>
-<td>…</td>
+<tr class="odd">
+<td align="left">X - - -</td>
+<td align="left">X -</td>
+<td align="left">X</td>
+<td align="left"><u>X</u></td>
+<td align="left">...</td>
 </tr>
-<tr>
-<td>全休止符</td>
-<td>二分休止符</td>
-<td>四分休止符</td>
-<td>八分休止符</td>
-<td>…</td>
+<tr class="even">
+<td align="left">全休止符</td>
+<td align="left">二分休止符</td>
+<td align="left">四分休止符</td>
+<td align="left">八分休止符</td>
+<td align="left">...</td>
 </tr>
-<tr>
-<td>0 0 0 0</td>
-<td>0 0</td>
-<td>0</td>
-<td><u>0</u></td>
-<td>…</td>
+<tr class="odd">
+<td align="left">0 0 0 0</td>
+<td align="left">0 0</td>
+<td align="left">0</td>
+<td align="left"><u>0</u></td>
+<td align="left">...</td>
 </tr>
 </tbody>
 </table>
@@ -262,8 +187,9 @@
   <entry>
     <title>Notes about Nazarov&#39;s Paper Part II</title>
     <url>/2020/03/02/Notes-about-Nazarov-s-Paper-Part-II/</url>
-    <content><![CDATA[<p>This is the second learning note about Nazarov’s paper.</p>
-<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partII.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+    <content><![CDATA[<p>This is the second learning note about Nazarov's paper.</p>
+<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partII.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
       <tags>
         <tag>Real Analysis</tag>
       </tags>
@@ -271,8 +197,9 @@
   <entry>
     <title>Notes about Nazarov&#39;s paper</title>
     <url>/2020/01/17/Notes-about-Nazarov-s-paper/</url>
-    <content><![CDATA[<p>This is a learning note about Nazarov’s paper.</p>
-<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partI.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+    <content><![CDATA[<p>This is a learning note about Nazarov's paper.</p>
+<a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partI.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
       <tags>
         <tag>Real Analysis</tag>
       </tags>
@@ -280,25 +207,16 @@
   <entry>
     <title>Some LaTeX Tips</title>
     <url>/2020/01/16/Some-LaTeX-Tips/</url>
-    <content><![CDATA[<p>这里是平时遇上的latex的相关问题,今后所有的与latex相关的东西都一并整理在这里.</p>
-<a id="more"></a>
-<h1 id="如何在目录中为附录加上appendix"><a class="markdownIt-Anchor" href="#如何在目录中为附录加上appendix"></a> 如何在目录中为附录加上Appendix</h1>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line">\usepackage[titletoc]&#123;appendix&#125;</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\begin&#123;appendices&#125;</span><br><span class="line">\section&#123;name of appendix&#125;</span><br><span class="line">...</span><br><span class="line">\end&#123;appendices&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
-<p>如果仅仅想最简单地添加附录,不用上面的宏包,就直接在附录的章节前加</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\appendix</span><br><span class="line">\section&#123;name of appendix&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="如何在引用中添加应用的页数"><a class="markdownIt-Anchor" href="#如何在引用中添加应用的页数"></a> 如何在引用中添加应用的页数</h1>
+    <content><![CDATA[<p>这里是平时遇上的latex的相关问题,今后所有的与latex相关的东西都一并整理在这里. <a id="more"></a> # 如何在目录中为附录加上Appendix <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line">\usepackage[titletoc]&#123;appendix&#125;</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\begin&#123;appendices&#125;</span><br><span class="line">\section&#123;name of appendix&#125;</span><br><span class="line">...</span><br><span class="line">\end&#123;appendices&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure> 如果仅仅想最简单地添加附录,不用上面的宏包,就直接在附录的章节前加 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\appendix</span><br><span class="line">\section&#123;name of appendix&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="如何在引用中添加应用的页数">如何在引用中添加应用的页数</h1>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line"></span><br><span class="line">\usepackage&#123;biblatex&#125;</span><br><span class="line">\addbibresource&#123;mybib.bib&#125; </span><br><span class="line">...</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\cite[150]&#123;turan1953neue&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
-<p>这时引用就会显示引用的页数是150,相应的mybib.bib文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@book&#123;turan1953neue,</span><br><span class="line">  title&#x3D;&#123;Eine neue Methode in der Analysis und deren Anwendungen&#125;,</span><br><span class="line">  author&#x3D;&#123;Tur&#123;\&#39;a&#125;n, Paul&#125;,</span><br><span class="line">  year&#x3D;&#123;1953&#125;,</span><br><span class="line">  publisher&#x3D;&#123;Akad&#123;\&#39;e&#125;miai Kiad&#123;\&#39;o&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果想显示第几页到第几页可以写成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\cite[150-151]&#123;turan1953neue&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="添加hyperref宏包后xelatex编译下无法定义新命令c"><a class="markdownIt-Anchor" href="#添加hyperref宏包后xelatex编译下无法定义新命令c"></a> 添加hyperref宏包后xelatex编译下无法定义新命令<code>\C</code></h1>
-<p>直接用<code>\newcommand\C{\ensuremath{\mathbb{C}}}</code>无法定义<code>\C</code>,这是因为该命令已经在宏包hyperref中被定义过.所以如果没有添加hyperref宏包则不会有问题,如果有这个宏包,<br />
-还相继续用<code>\C</code>来表示复数可以用`\renewcommand\C{\ensuremath{\mathbb{C}}}.</p>
-<h1 id="多行注释"><a class="markdownIt-Anchor" href="#多行注释"></a> 多行注释</h1>
+<p>这时引用就会显示引用的页数是150,相应的mybib.bib文件 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@book&#123;turan1953neue,</span><br><span class="line">  title&#x3D;&#123;Eine neue Methode in der Analysis und deren Anwendungen&#125;,</span><br><span class="line">  author&#x3D;&#123;Tur&#123;\&#39;a&#125;n, Paul&#125;,</span><br><span class="line">  year&#x3D;&#123;1953&#125;,</span><br><span class="line">  publisher&#x3D;&#123;Akad&#123;\&#39;e&#125;miai Kiad&#123;\&#39;o&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 如果想显示第几页到第几页可以写成 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\cite[150-151]&#123;turan1953neue&#125;</span><br></pre></td></tr></table></figure> # 添加hyperref宏包后xelatex编译下无法定义新命令<code>\C</code> 直接用<code>\newcommand\C{\ensuremath{\mathbb{C}}}</code>无法定义<code>\C</code>,这是因为该命令已经在宏包hyperref中被定义过.所以如果没有添加hyperref宏包则不会有问题,如果有这个宏包, 还相继续用<code>\C</code>来表示复数可以用`.</p>
+<h1 id="多行注释">多行注释</h1>
 <p>将需要注释的文本放进<code>\iffalse</code>和<code>\fi</code>之间.</p>
-<h1 id="属于符号in的反向符号"><a class="markdownIt-Anchor" href="#属于符号in的反向符号"></a> 属于符号<code>\in</code>的反向符号</h1>
+<h1 id="属于符号in的反向符号">属于符号<code>\in</code>的反向符号</h1>
 <p>用<code>\ni</code>即可.</p>
+<h1 id="markdown_斜体符号和mathjax中的_下标符号的冲突">markdown<code>_</code>斜体符号和mathjax中的<code>_</code>下标符号的冲突</h1>
+<p>因为用的是markdown格式,行内公式中如果存在下标<code>_</code>,会先被markdown按照斜体来处理,为了解决这个问题,行内公式的下标需要写成<code>\_</code>形式.</p>
 ]]></content>
       <tags>
         <tag>LaTeX</tag>
@@ -307,19 +225,9 @@
   <entry>
     <title>特定格式的文件以相同目录结构复制到另一文件夹下</title>
     <url>/2020/01/11/copy-pdf-file-hold-structure/</url>
-    <content><![CDATA[<p>因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:</p>
-<blockquote>
-<p>1.只复制pdf文件(即只复制特定格式)<br />
-2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件复制到aim文件夹中,其中由一个exa.pdf文件的路径为path-to-root/test/www/exa.pdf,那么复制的文件应该有路径path-to-root/aim/www/exa.pdf.</p>
-</blockquote>
-<p>下面是具体的代码:</p>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line">from_path = <span class="string">r"/home/rieunity/Documents/test"</span> <span class="comment"># 原路经</span></span><br><span class="line">to_path = <span class="string">r"/home/rieunity/Documents/aim"</span> <span class="comment"># 目标路径</span></span><br><span class="line">filetype = <span class="string">'.pdf'</span> <span class="comment"># 需要复制的文件类型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_pdf</span><span class="params">(from_path, to_path, filetype)</span>:</span></span><br><span class="line">    length = (len(from_path))</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(from_path):</span><br><span class="line">        dest_dir = os.path.join(to_path,root[length:][<span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(dest_dir):</span><br><span class="line">            os.makedirs(dest_dir)</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> os.path.splitext(file)[<span class="number">1</span>] == filetype:</span><br><span class="line">                from_path = os.path.join(root,file)</span><br><span class="line">                relative_path = (from_path[length:])</span><br><span class="line">                dest_path  = os.path.join(to_path,relative_path[<span class="number">1</span>:]) </span><br><span class="line">                copyfile(from_path, dest_path)</span><br><span class="line">copy_pdf(from_path, to_path, filetype)</span><br><span class="line">print(<span class="string">"All the files in "</span> + from_path + <span class="string">" has been copied successfully!"</span>)</span><br></pre></td></tr></table></figure>
-<p>为了让程序在Ubuntu中自动运行,在终端输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
-<p>在其中添加</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;30 * * * * python &#x2F;home&#x2F;rieunity&#x2F;Documents&#x2F;Notes&#x2F;copy-to-hexo.py</span><br></pre></td></tr></table></figure>
-<p>实现每30分钟自动运行程序.</p>
+    <content><![CDATA[<p>因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:<br />
+&gt;1.只复制pdf文件(即只复制特定格式) &gt;2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件复制到aim文件夹中,其中由一个exa.pdf文件的路径为path-to-root/test/www/exa.pdf,那么复制的文件应该有路径path-to-root/aim/www/exa.pdf.</p>
+<p>下面是具体的代码: <a id="more"></a> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line">from_path = <span class="string">r"/home/rieunity/Documents/test"</span> <span class="comment"># 原路经</span></span><br><span class="line">to_path = <span class="string">r"/home/rieunity/Documents/aim"</span> <span class="comment"># 目标路径</span></span><br><span class="line">filetype = <span class="string">'.pdf'</span> <span class="comment"># 需要复制的文件类型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_pdf</span><span class="params">(from_path, to_path, filetype)</span>:</span></span><br><span class="line">    length = (len(from_path))</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(from_path):</span><br><span class="line">        dest_dir = os.path.join(to_path,root[length:][<span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(dest_dir):</span><br><span class="line">            os.makedirs(dest_dir)</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> os.path.splitext(file)[<span class="number">1</span>] == filetype:</span><br><span class="line">                from_path = os.path.join(root,file)</span><br><span class="line">                relative_path = (from_path[length:])</span><br><span class="line">                dest_path  = os.path.join(to_path,relative_path[<span class="number">1</span>:]) </span><br><span class="line">                copyfile(from_path, dest_path)</span><br><span class="line">copy_pdf(from_path, to_path, filetype)</span><br><span class="line">print(<span class="string">"All the files in "</span> + from_path + <span class="string">" has been copied successfully!"</span>)</span><br></pre></td></tr></table></figure> 为了让程序在Ubuntu中自动运行,在终端输入 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure> 在其中添加 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;30 * * * * python &#x2F;home&#x2F;rieunity&#x2F;Documents&#x2F;Notes&#x2F;copy-to-hexo.py</span><br></pre></td></tr></table></figure> 实现每30分钟自动运行程序.</p>
 ]]></content>
       <tags>
         <tag>Python</tag>
@@ -328,8 +236,9 @@
   <entry>
     <title>De Giorgi-Nash-Moser Theory</title>
     <url>/2020/01/10/De-Giorgi-Nash-Moser-Theory/</url>
-    <content><![CDATA[<p>This is a learning note about the De Giorgi-Nash-Moser theory, the refere    nce book is Qing Han and Fanghua Lin’s <em>Elliptic Partial Differential Equations</em>.</p>
-<a class="btn" href="/download/Notes/Mathematics/PDE/20-01-01/degiorgi-nash-moser.pdf" title="De giorgi-Nash-Moser Theory"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+    <content><![CDATA[<p>This is a learning note about the De Giorgi-Nash-Moser theory, the refere nce book is Qing Han and Fanghua Lin's <em>Elliptic Partial Differential Equations</em>.</p>
+<a class="btn" href="/download/Notes/Mathematics/PDE/20-01-01/degiorgi-nash-moser.pdf" title="De giorgi-Nash-Moser Theory"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
       <tags>
         <tag>Partial Differential Equations</tag>
       </tags>
@@ -337,7 +246,7 @@
   <entry>
     <title>Center Manifold Theorem</title>
     <url>/2020/01/10/Center-Manifold-Theorem/</url>
-    <content><![CDATA[<p>This is a reading note about the Center Manifold Theorem, actually a translation of the last chapter “Tutorial on the Center Manifold Theorem”, written by Alberto Bressan, of the book <em>Hyperbolic Systems of Balance Laws</em>.</p>
+    <content><![CDATA[<p>This is a reading note about the Center Manifold Theorem, actually a translation of the last chapter &quot;Tutorial on the Center Manifold Theorem&quot;, written by Alberto Bressan, of the book <em>Hyperbolic Systems of Balance Laws</em>.</p>
 <a class="btn" href="/download/Notes/Mathematics/20-01-08/centre-manifold.pdf" title="Center Manifold Theorem"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
 ]]></content>
       <tags>
@@ -348,8 +257,9 @@
   <entry>
     <title>Sobolev&#39;s Inequality</title>
     <url>/2020/01/08/Sobolev-s-Inequality/</url>
-    <content><![CDATA[<p>This is a learning note about the Sobolev’s Inequality, the reference books are Evans’ <em>Partial Differential Equations</em> and Adams and Founier’s <em>Sobolev Spaces</em>.</p>
-<a class="btn" href="/download/Notes/Mathematics/PDE/20-01-07/sobolev-inequality.pdf" title="Sobolev's Inequality"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+    <content><![CDATA[<p>This is a learning note about the Sobolev's Inequality, the reference books are Evans' <em>Partial Differential Equations</em> and Adams and Founier's <em>Sobolev Spaces</em>.</p>
+<a class="btn" href="/download/Notes/Mathematics/PDE/20-01-07/sobolev-inequality.pdf" title="Sobolev's Inequality"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
       <tags>
         <tag>Partial Differential Equations</tag>
       </tags>
@@ -359,8 +269,7 @@
     <url>/2020/01/01/Error-occured-when-I-used-amsart-sty/</url>
     <content><![CDATA[<p>今天把文章样式从article改称amsart的时候一直报错:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">You can&#39;t use &#39;\end&#39; in internal vertical mode.</span><br></pre></td></tr></table></figure>
-<p>原来是amsart中的摘要必须用<code>\begin{abstract}...\end{abstract}</code>的形式,不能用article中的<code>\abstract</code>命令.<br />
-答案来源: <a href="https://tex.stackexchange.com/questions/331162/you-cant-use-end-in-internal-vertical-mode-error" target="_blank" rel="noopener">https://tex.stackexchange.com/questions/331162/you-cant-use-end-in-internal-vertical-mode-error</a></p>
+<p>原来是amsart中的摘要必须用<code>\begin{abstract}...\end{abstract}</code>的形式,不能用article中的<code>\abstract</code>命令. 答案来源: https://tex.stackexchange.com/questions/331162/you-cant-use-end-in-internal-vertical-mode-error</p>
 ]]></content>
       <tags>
         <tag>LaTeX</tag>
@@ -369,8 +278,9 @@
   <entry>
     <title>Maximum Principle</title>
     <url>/2019/12/31/maximum-principle/</url>
-    <content><![CDATA[<p>This is my learning note about Maximum Principle, the reference book is Evans’ <em>Partial Differential Equations</em>.</p>
-<a class="btn" href="/download/Notes/Mathematics/PDE/19-12-30/19-12-30.pdf" title="Maximum Principle"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>]]></content>
+    <content><![CDATA[<p>This is my learning note about Maximum Principle, the reference book is Evans' <em>Partial Differential Equations</em>.</p>
+<a class="btn" href="/download/Notes/Mathematics/PDE/19-12-30/19-12-30.pdf" title="Maximum Principle"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
       <tags>
         <tag>Partial Differential Equations</tag>
       </tags>
@@ -398,15 +308,8 @@
   <entry>
     <title>89hao的博客</title>
     <url>/2019/12/29/hello-world/</url>
-    <content><![CDATA[<p>我是89hao.<br />
-这是我的第n个第一篇博客(换了好几回).</p>
-<p>顺便写以下关于pandoc将latex文件转换为markdown文件的总结.<br />
-我用的是命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure>
-<p>如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个.<br />
-但是latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留.<br />
-mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不掉的错,大概率是转译问题,而且mathjax又有点慢.<br />
-除了应用于wordpress的latex2wordpress, pandoc和完全保留原样式的html2pdfEX,还没有找到特别好的转换软件.</p>
+    <content><![CDATA[<p>我是89hao. 这是我的第n个第一篇博客(换了好几回).</p>
+<p>顺便写以下关于pandoc将latex文件转换为markdown文件的总结. 我用的是命令 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pandoc test.tex -o test.md --wrap&#x3D;preserve</span><br></pre></td></tr></table></figure> 如果不加<code>--wrap=preserve</code>则翻译出来的行间公式没有另起一行,这样会导致markdown不认识,所以必须要加上这个. 但是latex中的<code>\label</code>命令无法使用,公式环境的序号也没有能够保留. mathjax可以像latex一样进行编号,但是经常出现我怎么改也改不掉的错,大概率是转译问题,而且mathjax又有点慢. 除了应用于wordpress的latex2wordpress, pandoc和完全保留原样式的html2pdfEX,还没有找到特别好的转换软件.</p>
 ]]></content>
   </entry>
 </search>

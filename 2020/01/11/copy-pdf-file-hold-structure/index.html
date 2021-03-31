@@ -46,12 +46,12 @@
   };
 </script>
 
-  <meta name="description" content="因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:  1.只复制pdf文件(即只复制特定格式) 2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件复制到aim文">
+  <meta name="description" content="因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求: &gt;1.只复制pdf文件(即只复制特定格式) &gt;2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="特定格式的文件以相同目录结构复制到另一文件夹下">
 <meta property="og:url" content="http://rieunity.github.io.com/2020/01/11/copy-pdf-file-hold-structure/index.html">
 <meta property="og:site_name" content="Rieunity">
-<meta property="og:description" content="因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:  1.只复制pdf文件(即只复制特定格式) 2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件复制到aim文">
+<meta property="og:description" content="因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求: &gt;1.只复制pdf文件(即只复制特定格式) &gt;2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-10T18:22:39.000Z">
 <meta property="article:modified_time" content="2020-01-11T05:10:47.904Z">
@@ -250,19 +250,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:</p>
-<blockquote>
-<p>1.只复制pdf文件(即只复制特定格式)<br />
-2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件复制到aim文件夹中,其中由一个exa.pdf文件的路径为path-to-root/test/www/exa.pdf,那么复制的文件应该有路径path-to-root/aim/www/exa.pdf.</p>
-</blockquote>
-<p>下面是具体的代码:</p>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line">from_path = <span class="string">r"/home/rieunity/Documents/test"</span> <span class="comment"># 原路经</span></span><br><span class="line">to_path = <span class="string">r"/home/rieunity/Documents/aim"</span> <span class="comment"># 目标路径</span></span><br><span class="line">filetype = <span class="string">'.pdf'</span> <span class="comment"># 需要复制的文件类型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_pdf</span><span class="params">(from_path, to_path, filetype)</span>:</span></span><br><span class="line">    length = (len(from_path))</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(from_path):</span><br><span class="line">        dest_dir = os.path.join(to_path,root[length:][<span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(dest_dir):</span><br><span class="line">            os.makedirs(dest_dir)</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> os.path.splitext(file)[<span class="number">1</span>] == filetype:</span><br><span class="line">                from_path = os.path.join(root,file)</span><br><span class="line">                relative_path = (from_path[length:])</span><br><span class="line">                dest_path  = os.path.join(to_path,relative_path[<span class="number">1</span>:]) </span><br><span class="line">                copyfile(from_path, dest_path)</span><br><span class="line">copy_pdf(from_path, to_path, filetype)</span><br><span class="line">print(<span class="string">"All the files in "</span> + from_path + <span class="string">" has been copied successfully!"</span>)</span><br></pre></td></tr></table></figure>
-<p>为了让程序在Ubuntu中自动运行,在终端输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
-<p>在其中添加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;30 * * * * python &#x2F;home&#x2F;rieunity&#x2F;Documents&#x2F;Notes&#x2F;copy-to-hexo.py</span><br></pre></td></tr></table></figure>
-<p>实现每30分钟自动运行程序.</p>
+        <p>因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:<br />
+&gt;1.只复制pdf文件(即只复制特定格式) &gt;2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件复制到aim文件夹中,其中由一个exa.pdf文件的路径为path-to-root/test/www/exa.pdf,那么复制的文件应该有路径path-to-root/aim/www/exa.pdf.</p>
+<p>下面是具体的代码: <a id="more"></a> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line">from_path = <span class="string">r"/home/rieunity/Documents/test"</span> <span class="comment"># 原路经</span></span><br><span class="line">to_path = <span class="string">r"/home/rieunity/Documents/aim"</span> <span class="comment"># 目标路径</span></span><br><span class="line">filetype = <span class="string">'.pdf'</span> <span class="comment"># 需要复制的文件类型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_pdf</span><span class="params">(from_path, to_path, filetype)</span>:</span></span><br><span class="line">    length = (len(from_path))</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(from_path):</span><br><span class="line">        dest_dir = os.path.join(to_path,root[length:][<span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(dest_dir):</span><br><span class="line">            os.makedirs(dest_dir)</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> os.path.splitext(file)[<span class="number">1</span>] == filetype:</span><br><span class="line">                from_path = os.path.join(root,file)</span><br><span class="line">                relative_path = (from_path[length:])</span><br><span class="line">                dest_path  = os.path.join(to_path,relative_path[<span class="number">1</span>:]) </span><br><span class="line">                copyfile(from_path, dest_path)</span><br><span class="line">copy_pdf(from_path, to_path, filetype)</span><br><span class="line">print(<span class="string">"All the files in "</span> + from_path + <span class="string">" has been copied successfully!"</span>)</span><br></pre></td></tr></table></figure> 为了让程序在Ubuntu中自动运行,在终端输入 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure> 在其中添加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;30 * * * * python &#x2F;home&#x2F;rieunity&#x2F;Documents&#x2F;Notes&#x2F;copy-to-hexo.py</span><br></pre></td></tr></table></figure> 实现每30分钟自动运行程序.</p>
 
     </div>
 
@@ -360,12 +350,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -398,7 +388,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -504,10 +494,53 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+<script type="text/x-mathjax-config">
 
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 

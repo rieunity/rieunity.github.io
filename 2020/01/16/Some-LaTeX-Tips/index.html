@@ -54,7 +54,7 @@
 <meta property="og:description" content="这里是平时遇上的latex的相关问题,今后所有的与latex相关的东西都一并整理在这里.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-16T06:21:25.000Z">
-<meta property="article:modified_time" content="2020-02-28T16:28:15.374Z">
+<meta property="article:modified_time" content="2020-10-20T06:06:18.470Z">
 <meta property="article:author" content="89hao">
 <meta property="article:tag" content="LaTeX">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-29 00:28:15" itemprop="dateModified" datetime="2020-02-29T00:28:15+08:00">2020-02-29</time>
+                <time title="Modified: 2020-10-20 14:06:18" itemprop="dateModified" datetime="2020-10-20T14:06:18+08:00">2020-10-20</time>
               </span>
 
           
@@ -256,25 +256,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这里是平时遇上的latex的相关问题,今后所有的与latex相关的东西都一并整理在这里.</p>
-<a id="more"></a>
-<h1 id="如何在目录中为附录加上appendix"><a class="markdownIt-Anchor" href="#如何在目录中为附录加上appendix"></a> 如何在目录中为附录加上Appendix</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line">\usepackage[titletoc]&#123;appendix&#125;</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\begin&#123;appendices&#125;</span><br><span class="line">\section&#123;name of appendix&#125;</span><br><span class="line">...</span><br><span class="line">\end&#123;appendices&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
-<p>如果仅仅想最简单地添加附录,不用上面的宏包,就直接在附录的章节前加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\appendix</span><br><span class="line">\section&#123;name of appendix&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="如何在引用中添加应用的页数"><a class="markdownIt-Anchor" href="#如何在引用中添加应用的页数"></a> 如何在引用中添加应用的页数</h1>
+        <p>这里是平时遇上的latex的相关问题,今后所有的与latex相关的东西都一并整理在这里. <a id="more"></a> # 如何在目录中为附录加上Appendix <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line">\usepackage[titletoc]&#123;appendix&#125;</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\begin&#123;appendices&#125;</span><br><span class="line">\section&#123;name of appendix&#125;</span><br><span class="line">...</span><br><span class="line">\end&#123;appendices&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure> 如果仅仅想最简单地添加附录,不用上面的宏包,就直接在附录的章节前加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\appendix</span><br><span class="line">\section&#123;name of appendix&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="如何在引用中添加应用的页数">如何在引用中添加应用的页数</h1>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">\documentclass&#123;article&#125;</span><br><span class="line"></span><br><span class="line">\usepackage&#123;biblatex&#125;</span><br><span class="line">\addbibresource&#123;mybib.bib&#125; </span><br><span class="line">...</span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">...</span><br><span class="line">\cite[150]&#123;turan1953neue&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
-<p>这时引用就会显示引用的页数是150,相应的mybib.bib文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@book&#123;turan1953neue,</span><br><span class="line">  title&#x3D;&#123;Eine neue Methode in der Analysis und deren Anwendungen&#125;,</span><br><span class="line">  author&#x3D;&#123;Tur&#123;\&#39;a&#125;n, Paul&#125;,</span><br><span class="line">  year&#x3D;&#123;1953&#125;,</span><br><span class="line">  publisher&#x3D;&#123;Akad&#123;\&#39;e&#125;miai Kiad&#123;\&#39;o&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果想显示第几页到第几页可以写成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\cite[150-151]&#123;turan1953neue&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="添加hyperref宏包后xelatex编译下无法定义新命令c"><a class="markdownIt-Anchor" href="#添加hyperref宏包后xelatex编译下无法定义新命令c"></a> 添加hyperref宏包后xelatex编译下无法定义新命令<code>\C</code></h1>
-<p>直接用<code>\newcommand\C{\ensuremath{\mathbb{C}}}</code>无法定义<code>\C</code>,这是因为该命令已经在宏包hyperref中被定义过.所以如果没有添加hyperref宏包则不会有问题,如果有这个宏包,<br />
-还相继续用<code>\C</code>来表示复数可以用`\renewcommand\C{\ensuremath{\mathbb{C}}}.</p>
-<h1 id="多行注释"><a class="markdownIt-Anchor" href="#多行注释"></a> 多行注释</h1>
+<p>这时引用就会显示引用的页数是150,相应的mybib.bib文件 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@book&#123;turan1953neue,</span><br><span class="line">  title&#x3D;&#123;Eine neue Methode in der Analysis und deren Anwendungen&#125;,</span><br><span class="line">  author&#x3D;&#123;Tur&#123;\&#39;a&#125;n, Paul&#125;,</span><br><span class="line">  year&#x3D;&#123;1953&#125;,</span><br><span class="line">  publisher&#x3D;&#123;Akad&#123;\&#39;e&#125;miai Kiad&#123;\&#39;o&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 如果想显示第几页到第几页可以写成 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\cite[150-151]&#123;turan1953neue&#125;</span><br></pre></td></tr></table></figure> # 添加hyperref宏包后xelatex编译下无法定义新命令<code>\C</code> 直接用<code>\newcommand\C{\ensuremath{\mathbb{C}}}</code>无法定义<code>\C</code>,这是因为该命令已经在宏包hyperref中被定义过.所以如果没有添加hyperref宏包则不会有问题,如果有这个宏包, 还相继续用<code>\C</code>来表示复数可以用`.</p>
+<h1 id="多行注释">多行注释</h1>
 <p>将需要注释的文本放进<code>\iffalse</code>和<code>\fi</code>之间.</p>
-<h1 id="属于符号in的反向符号"><a class="markdownIt-Anchor" href="#属于符号in的反向符号"></a> 属于符号<code>\in</code>的反向符号</h1>
+<h1 id="属于符号in的反向符号">属于符号<code>\in</code>的反向符号</h1>
 <p>用<code>\ni</code>即可.</p>
+<h1 id="markdown_斜体符号和mathjax中的_下标符号的冲突">markdown<code>_</code>斜体符号和mathjax中的<code>_</code>下标符号的冲突</h1>
+<p>因为用的是markdown格式,行内公式中如果存在下标<code>_</code>,会先被markdown按照斜体来处理,为了解决这个问题,行内公式的下标需要写成<code>\_</code>形式.</p>
 
     </div>
 
@@ -359,7 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在目录中为附录加上appendix"><span class="nav-number">1.</span> <span class="nav-text"> 如何在目录中为附录加上Appendix</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在引用中添加应用的页数"><span class="nav-number">2.</span> <span class="nav-text"> 如何在引用中添加应用的页数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加hyperref宏包后xelatex编译下无法定义新命令c"><span class="nav-number">3.</span> <span class="nav-text"> 添加hyperref宏包后xelatex编译下无法定义新命令\C</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多行注释"><span class="nav-number">4.</span> <span class="nav-text"> 多行注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属于符号in的反向符号"><span class="nav-number">5.</span> <span class="nav-text"> 属于符号\in的反向符号</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在引用中添加应用的页数"><span class="nav-number">1.</span> <span class="nav-text">如何在引用中添加应用的页数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多行注释"><span class="nav-number">2.</span> <span class="nav-text">多行注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属于符号in的反向符号"><span class="nav-number">3.</span> <span class="nav-text">属于符号\in的反向符号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#markdown_斜体符号和mathjax中的_下标符号的冲突"><span class="nav-number">4.</span> <span class="nav-text">markdown_斜体符号和mathjax中的_下标符号的冲突</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -373,12 +364,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -411,7 +402,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -517,10 +508,53 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+<script type="text/x-mathjax-config">
 
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 
