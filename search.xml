@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Notes about Riemannian Geometry</title>
+    <url>/2021/04/04/Notes-about-Riemannian-Geometry/</url>
+    <content><![CDATA[<p>The learning notes are an introduction to riemannian geometry. The learning resources I used are videos of the course: MIT18.965, Geometry of Manifolds, 2020 Fall, given by Willian Philip Minicozzi II. As an introduction course, the last 4 classes introduce some comparison geometry and geometric analysis which I omitted in my notes because of too much equations to type for humanity. Except this part, the notes arrange most topics the same order as the class did. Most part of the last section and some definitions come from Do Carmo's <em>Riemannian Geometry</em>.</p>
+<p><a class="btn" href="/download/Notes/Mathematics/lessons/Riemannian_Geometry/riemannian_geometry.pdf" title="Geometry of Manifolds I"><i class="fa fa-download fa-fw fa-lg"></i>Download</a></p>
+]]></content>
+      <tags>
+        <tag>Geometry of Manifolds</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Notes about elementary algebraic geometry</title>
     <url>/2021/03/31/Notes-about-elementary-algebraic-geometry/</url>
     <content><![CDATA[<p>These notes was written in 2017 when I studied algebraic geometry myself in YouTube from the channel ICTP Math, the speaker of Lothar Göttsche. The notes include all 20 lectures of the course.</p>
