@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>晴雅集</title>
-    <url>/2021/04/24/%E6%99%B4%E9%9B%85%E9%9B%86/</url>
-    <content><![CDATA[<video src="https://www.bilibili.com/video/av80664494" controls="controls" style="max-width: 100%; display: block; margin-left: auto; margin-right: auto;">
-your browser does not support the video tag
-</video>
-]]></content>
-  </entry>
-  <entry>
     <title>Notes about Riemannian Geometry</title>
     <url>/2021/04/04/Notes-about-Riemannian-Geometry/</url>
     <content><![CDATA[<p>The learning notes are an introduction to riemannian geometry. The learning resources I used are videos of the course: MIT18.965, Geometry of Manifolds, 2020 Fall, given by Willian Philip Minicozzi II. As an introduction course, the last 4 classes introduce some comparison geometry and geometric analysis which I omitted in my notes because of too much equations to type for humanity. Except this part, the notes arrange most topics the same order as the class did. Most part of the last section and some definitions come from Do Carmo's <em>Riemannian Geometry</em>.</p>
