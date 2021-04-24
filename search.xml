@@ -23,7 +23,7 @@
   <entry>
     <title>将学生提交的电子文件作业重命名成统一的格式</title>
     <url>/2020/05/24/%E5%B0%86%E5%AD%A6%E7%94%9F%E6%8F%90%E4%BA%A4%E7%9A%84%E7%94%B5%E5%AD%90%E6%96%87%E4%BB%B6%E4%BD%9C%E4%B8%9A%E9%87%8D%E5%91%BD%E5%90%8D%E6%88%90%E7%BB%9F%E4%B8%80%E7%9A%84%E6%A0%BC%E5%BC%8F/</url>
-    <content><![CDATA[<p>因为疫情,很多课程都改为线上上课,作业也交的是纸质版,尽管老师强调文件命名要统一格式,但还是出现了各种各样的命名方式.为了重新将文件统一命名,写了下面的程序.原理就是读取学生名单文件(Excel文件),并提取每一个学生的姓名和学号,然后查询上交的作业文件名中包含学号或者学生姓名的文件统一重新命名.<br>
+    <content><![CDATA[<p>因为疫情,很多课程都改为线上上课,作业也交的是纸质版,尽管老师强调文件命名要统一格式,但还是出现了各种各样的命名方式.为了重新将文件统一命名,写了下面的程序.原理就是读取学生名单文件(Excel文件),并提取每一个学生的姓名和学号,然后查询上交的作业文件名中包含学号或者学生姓名的文件统一重新命名.<br />
 这里用到了xlrd模块,通过它来读取Excel表格中的学生信息.Excel表格的前三列分别是学生的学号,班级以及姓名.例如在名单表格中,一位学生在表格的前三列信息分别是1121100210,1211101,小明,而ta提交的作业文件名却只是1121100210小明.pdf或者1211101小明.pdf,我们希望最终修改后的文件名为1121100210-1211101-小明.pdf的形式. <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExcelData</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 初始化方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data_path, sheetname)</span>:</span></span><br><span class="line">        <span class="comment"># 定义一个属性接收文件路径</span></span><br><span class="line">        self.data_path = data_path</span><br><span class="line">        <span class="comment"># 定义一个属性接收工作表名称</span></span><br><span class="line">        self.sheetname = sheetname</span><br><span class="line">        <span class="comment"># 使用xlrd模块打开excel表读取数据</span></span><br><span class="line">        self.data = xlrd.open_workbook(self.data_path)</span><br><span class="line">        <span class="comment"># 根据工作表的名称获取工作表中的内容</span></span><br><span class="line">        self.table = self.data.sheet_by_name(self.sheetname)</span><br><span class="line">        <span class="comment"># 获取工作表的有效行数</span></span><br><span class="line">        self.rowNum = self.table.nrows</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成第i行学生的新文件名</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">newName</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="comment"># 定义一个空变量</span></span><br><span class="line">        data = <span class="string">""</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            c_cell = self.table.cell_value(i,j)</span><br><span class="line">            c_cell = str(c_cell)</span><br><span class="line">            <span class="comment"># 将数据加进变量中</span></span><br><span class="line">            <span class="keyword">if</span> j != <span class="number">0</span>:</span><br><span class="line">                data = data + <span class="string">"-"</span> + c_cell</span><br><span class="line">            <span class="keyword">else</span>:   </span><br><span class="line">                data = c_cell</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取第i行学生的学号</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">studentNumber</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        studentnumber = self.table.cell_value(i,<span class="number">0</span>)</span><br><span class="line">        studentnumber = str(studentnumber)</span><br><span class="line">        <span class="keyword">return</span> studentnumber</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取第i行学生的姓名</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">studentName</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        studentname = self.table.cell_value(i,<span class="number">2</span>)</span><br><span class="line">        studentname = str(studentname)</span><br><span class="line">        <span class="keyword">return</span> studentname</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找学生的作业是否存在修改学生的作业文件名</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changeName</span><span class="params">(studentname, studentnumber, newname)</span>:</span></span><br><span class="line">    <span class="comment"># 获得工作目录的相对地址</span></span><br><span class="line">    path = os.getcwd()</span><br><span class="line">    <span class="comment"># 需要修改名字的文件目录地址</span></span><br><span class="line">    filespath = path + <span class="string">"\\files"</span></span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(filespath):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="comment"># 查询是否有原文件名包含学生的姓名或者学号,如存在就进入判断体</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span>((file.find(studentname)&lt;<span class="number">0</span> <span class="keyword">and</span> file.find(studentnumber)&lt;<span class="number">0</span>)):</span><br><span class="line">                <span class="comment"># 获得匹配的原文件的文件格式后缀</span></span><br><span class="line">                extension = os.path.splitext(file)[<span class="number">1</span>]</span><br><span class="line">                <span class="comment"># 新文件的文件路径</span></span><br><span class="line">                newnamedir = path + <span class="string">"\\newfiles\\"</span> + newname + str(extension)</span><br><span class="line">                <span class="comment"># 旧文件的文件路径</span></span><br><span class="line">                oldnamedir = path + <span class="string">"\\files\\"</span> + file</span><br><span class="line">                <span class="comment"># 判断要复制到的文件夹中是否已经有新文件</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">not</span>(os.path.exists(newnamedir))):</span><br><span class="line">                    <span class="comment"># 复制并且重命名文件</span></span><br><span class="line">                    copyfile(oldnamedir, newnamedir)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    data_path = <span class="string">"学生成绩.xls"</span></span><br><span class="line">    sheetname = <span class="string">"sheet1"</span></span><br><span class="line">    data = ExcelData(data_path, sheetname)</span><br><span class="line">    rows = data.rowNum </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,rows):</span><br><span class="line">        newname = data.newName(i)</span><br><span class="line">        studentnumber = data.studentNumber(i)</span><br><span class="line">        studentname = data.studentName(i)</span><br><span class="line">        changeName(studentname, studentnumber, newname)</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
@@ -63,7 +63,7 @@
     <title>vim+vimtex+zathura backward search</title>
     <url>/2020/04/20/vim-vimtex-zathura-backward-search/</url>
     <content><![CDATA[<p>以前一直没有用zathura的backward search功能,用的时候发现不好用.原因是从终端打开的vim没有servername.想验证以下就输入 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:echo v:servername</span><br></pre></td></tr></table></figure> 输出是空白. 一个简单的解决方案就是自己手动加上servername,比如当打开body.tex文件时可以输入 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim --servername rieunity body.tex</span><br></pre></td></tr></table></figure> 或者在操作系统中加一个alias <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alias vim&#x3D;&quot;vim --servername rieunity&quot;</span><br></pre></td></tr></table></figure></p>
-<p>参考链接:<br>
+<p>参考链接:<br />
 <a href="https://github.com/lervag/vimtex/issues/206" target="_blank" rel="noopener" class="uri">https://github.com/lervag/vimtex/issues/206</a></p>
 ]]></content>
       <tags>
@@ -94,9 +94,9 @@
   <entry>
     <title>UltiSnips设置冲突</title>
     <url>/2020/03/16/UltiSnips%E8%AE%BE%E7%BD%AE%E5%86%B2%E7%AA%81/</url>
-    <content><![CDATA[<p>这里会成为记载UltiSnips插件中所有snippets冲突的地方:<br>
-## <code>\alpha</code>后面直接加上标会冲突 因为上标是<code>td</code>片段,会和前面组成<code>hat</code>片段<br>
-## 字母<code>p</code>后面不能直接输入<code>int</code>片段<br>
+    <content><![CDATA[<p>这里会成为记载UltiSnips插件中所有snippets冲突的地方:<br />
+## <code>\alpha</code>后面直接加上标会冲突 因为上标是<code>td</code>片段,会和前面组成<code>hat</code>片段<br />
+## 字母<code>p</code>后面不能直接输入<code>int</code>片段<br />
 因为会组合成<code>pi</code>片段 <a id="more"></a></p>
 ]]></content>
       <tags>
@@ -118,19 +118,19 @@
     <url>/2020/03/08/%E4%B9%90%E7%90%86%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1 id="基础入门">基础入门</h1>
 <h2 id="认识简谱">认识简谱</h2>
-<p>| | | | | | | | -|-|-|-|-|-|-|- 简谱| 1|2|3|4|5|6|7 唱名| do| re|mi|fa|so|la|xi 音名|C|D|E|F|G|A|B 升降音:#1(升) b3(降) ## 音的高低 低音:下面加一点<br>
-中音:不加点<br>
-高音:上面加一点<br>
-倍低音:下面加两点(两点纵向排列)<br>
+<p>| | | | | | | | -|-|-|-|-|-|-|- 简谱| 1|2|3|4|5|6|7 唱名| do| re|mi|fa|so|la|xi 音名|C|D|E|F|G|A|B 升降音:#1(升) b3(降) ## 音的高低 低音:下面加一点<br />
+中音:不加点<br />
+高音:上面加一点<br />
+倍低音:下面加两点(两点纵向排列)<br />
 倍高音:上面加两点</p>
 <a id="more"></a>
 <h2 id="音的长短">音的长短</h2>
-<p>全音符:整圆,4拍<br>
-2分音符:半圆,2拍<br>
-4分音符: 1/4圆,1拍<br>
-8分音符:1/8圆,1/2拍<br>
-16分音符:1/16圆,1/4拍<br>
-32分音符:1/32圆,1/8拍<br>
+<p>全音符:整圆,4拍<br />
+2分音符:半圆,2拍<br />
+4分音符: 1/4圆,1拍<br />
+8分音符:1/8圆,1/2拍<br />
+16分音符:1/16圆,1/4拍<br />
+32分音符:1/32圆,1/8拍<br />
 64分音符:1/64圆,1/16拍</p>
 <table>
 <thead>
@@ -235,7 +235,7 @@
   <entry>
     <title>特定格式的文件以相同目录结构复制到另一文件夹下</title>
     <url>/2020/01/11/copy-pdf-file-hold-structure/</url>
-    <content><![CDATA[<p>因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:<br>
+    <content><![CDATA[<p>因为自己写了许多的LaTeX文件,并相应生成了许多pdf,为了让博客能够下载,我就必须把pdf搬运到博客source文件夹下,但是一个个的复制粘贴太麻烦,所以自己写了一个python来实现特定文件夹下pdf文件的查找和复制.但是我的复制有以下要求:<br />
 &gt;1.只复制pdf文件(即只复制特定格式) &gt;2.复制到另一个文件夹下面时保持文件目录结构不变.例如我要把test文件夹下所有的pdf文件复制到aim文件夹中,其中由一个exa.pdf文件的路径为path-to-root/test/www/exa.pdf,那么复制的文件应该有路径path-to-root/aim/www/exa.pdf.</p>
 <p>下面是具体的代码: <a id="more"></a> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line">from_path = <span class="string">r"/home/rieunity/Documents/test"</span> <span class="comment"># 原路经</span></span><br><span class="line">to_path = <span class="string">r"/home/rieunity/Documents/aim"</span> <span class="comment"># 目标路径</span></span><br><span class="line">filetype = <span class="string">'.pdf'</span> <span class="comment"># 需要复制的文件类型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copy_pdf</span><span class="params">(from_path, to_path, filetype)</span>:</span></span><br><span class="line">    length = (len(from_path))</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(from_path):</span><br><span class="line">        dest_dir = os.path.join(to_path,root[length:][<span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(dest_dir):</span><br><span class="line">            os.makedirs(dest_dir)</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> os.path.splitext(file)[<span class="number">1</span>] == filetype:</span><br><span class="line">                from_path = os.path.join(root,file)</span><br><span class="line">                relative_path = (from_path[length:])</span><br><span class="line">                dest_path  = os.path.join(to_path,relative_path[<span class="number">1</span>:]) </span><br><span class="line">                copyfile(from_path, dest_path)</span><br><span class="line">copy_pdf(from_path, to_path, filetype)</span><br><span class="line">print(<span class="string">"All the files in "</span> + from_path + <span class="string">" has been copied successfully!"</span>)</span><br></pre></td></tr></table></figure> 为了让程序在Ubuntu中自动运行,在终端输入 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure> 在其中添加 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;30 * * * * python &#x2F;home&#x2F;rieunity&#x2F;Documents&#x2F;Notes&#x2F;copy-to-hexo.py</span><br></pre></td></tr></table></figure> 实现每30分钟自动运行程序.</p>
 ]]></content>
