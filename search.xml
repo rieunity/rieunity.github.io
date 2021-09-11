@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Notes about Category Theory</title>
+    <url>/2021/09/11/Notes-about-Category-Theory/</url>
+    <content><![CDATA[<p>The learning notes are a collection of some notions and important theorems about category theory. I learned it from the note <em>Basic Category Theory</em> written by Tom Leinster, to help me more familar with the categorical language. Most of the content is from this note, others are from the Stack Project and <em>The Rising Sea: Fundations of Algebraic Geometry</em>.</p>
+<a class="btn" href="/download/Notes/Mathematics/lessons/category_theory/category_theory.pdf" title="Category Theory"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
+      <tags>
+        <tag>Algebraic Geometry</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Notes about Riemannian Geometry</title>
     <url>/2021/04/04/Notes-about-Riemannian-Geometry/</url>
     <content><![CDATA[<p>The learning notes are an introduction to riemannian geometry. The learning resources I used are videos of the course: MIT18.965, Geometry of Manifolds, 2020 Fall, given by Willian Philip Minicozzi II. As an introduction course, the last 4 classes introduce some comparison geometry and geometric analysis which I omitted in my notes because of too much equations to type for humanity. Except this part, the notes arrange most topics the same order as the class did. Most part of the last section and some definitions come from Do Carmo's <em>Riemannian Geometry</em>.</p>
