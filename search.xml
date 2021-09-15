@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Notes about Category Theory</title>
+    <title>Notes About Fourier-Stieltjes Transforms on The Line</title>
+    <url>/2021/09/15/Notes-About-Fourier-Stieltjes-Transforms-on-the-Line/</url>
+    <content><![CDATA[<p>The notes are an introduction about Fourier-Stieltjes transforms on the line, base on Yitzhak Katznelson's <em>An Introduction to Harmonic Analysis</em>.</p>
+<a class="btn" href="/download/Notes/Mathematics/lessons/fourier_stieltjes/four_stie.pdf" title="Fourier-Stieltjes Transforms on the Line"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
+      <tags>
+        <tag>Harmonic Analysis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Notes About Category Theory</title>
     <url>/2021/09/11/Notes-about-Category-Theory/</url>
     <content><![CDATA[<p>The learning notes are a collection of some notions and important theorems about category theory. I learned it from the note <em>Basic Category Theory</em> written by Tom Leinster, to help me more familar with the categorical language. Most of the content is from this note, others are from the Stack Project and <em>The Rising Sea: Fundations of Algebraic Geometry</em>.</p>
 <a class="btn" href="/download/Notes/Mathematics/lessons/category_theory/cat_theory.pdf" title="Category Theory"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
@@ -11,7 +21,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Notes about Riemannian Geometry</title>
+    <title>Notes About Riemannian Geometry</title>
     <url>/2021/04/04/Notes-about-Riemannian-Geometry/</url>
     <content><![CDATA[<p>The learning notes are an introduction to riemannian geometry. The learning resources I used are videos of the course: MIT18.965, Geometry of Manifolds, 2020 Fall, given by Willian Philip Minicozzi II. As an introduction course, the last 4 classes introduce some comparison geometry and geometric analysis which I omitted in my notes because of too much equations to type for humanity. Except this part, the notes arrange most topics the same order as the class did. Most part of the last section and some definitions come from Do Carmo's <em>Riemannian Geometry</em>.</p>
 <p><a class="btn" href="/download/Notes/Mathematics/lessons/Riemannian_Geometry/riemannian_geometry.pdf" title="Geometry of Manifolds I"><i class="fa fa-download fa-fw fa-lg"></i>Download</a></p>
@@ -21,7 +31,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Notes about elementary algebraic geometry</title>
+    <title>Notes About elementary algebraic geometry</title>
     <url>/2021/03/31/Notes-about-elementary-algebraic-geometry/</url>
     <content><![CDATA[<p>These notes was written in 2017 when I studied algebraic geometry myself in YouTube from the channel ICTP Math, the speaker of Lothar Göttsche. The notes include all 20 lectures of the course.</p>
 <a class="btn" href="/download/Notes/Mathematics/lessons/algebraic_geometry_1/algebraic_geometry_1.pdf" title="Elementary Algebraic Geometry"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
@@ -92,7 +102,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Notes about GTM 249: Classical Fourier Analysis</title>
+    <title>Notes About GTM 249: Classical Fourier Analysis</title>
     <url>/2020/03/18/Notes-about-GTM-249-Classical-Fourier-Analysis/</url>
     <content><![CDATA[<p>This is a learning note about GTM 249: <em>Classical Fourier Analysis</em>.</p>
 <a class="btn" href="/download/Notes/Mathematics/HA/20-03-10/20-03-10.pdf" title="Notes about GTM 249: Classical Fourier Analysis"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
@@ -205,7 +215,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Notes about Nazarov&#39;s Paper Part II</title>
+    <title>Notes About Nazarov&#39;s Paper Part II</title>
     <url>/2020/03/02/Notes-about-Nazarov-s-Paper-Part-II/</url>
     <content><![CDATA[<p>This is the second learning note about Nazarov's paper.</p>
 <a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partII.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
@@ -215,7 +225,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Notes about Nazarov&#39;s paper</title>
+    <title>Notes About Nazarov&#39;s paper</title>
     <url>/2020/01/17/Notes-about-Nazarov-s-paper/</url>
     <content><![CDATA[<p>This is a learning note about Nazarov's paper.</p>
 <a class="btn" href="/download/Notes/Paper_Reading/paper_1/paper_1_partI.pdf" title="Notes about Nazarov's paper"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
