@@ -51,6 +51,16 @@
       </tags>
   </entry>
   <entry>
+    <title>Notes About Modular Forms</title>
+    <url>/2020/05/21/Notes-About-Modular-Forms/</url>
+    <content><![CDATA[<p>The learning notes are a basic introduction of modular forms based on Yitang Zhang's lecture videos.</p>
+<a class="btn" href="/download/Notes/Mathematics/lessons/modular_forms/modular_forms.pdf" title="Modular Forms"><i class="fa fa-download fa-fw fa-lg"></i>Download</a>
+]]></content>
+      <tags>
+        <tag>Number Theory</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>爱因斯坦方程</title>
     <url>/2020/04/29/%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E6%96%B9%E7%A8%8B/</url>
     <content><![CDATA[<p>写这篇博客一方面是为了回忆爱因斯坦方程 <span class="math display">\[R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R=8\pi GT_{\mu\nu}\]</span> 的一个&quot;推导&quot;过程,另一方面试一试katex对数学公式的支持如何.</p>
